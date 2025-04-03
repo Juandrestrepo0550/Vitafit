@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS para el diseño responsivo -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts para estilos de texto personalizados -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Iconos de Boxicons para añadir íconos -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <!-- Archivo CSS personalizado -->
+    <link rel="stylesheet" href="style.css">
+    <title>Registrate</title>
+</head>
+<body>
+    <!-- Contenedor principal para el formulario de registro -->
+    <div class="container-form register d-flex flex-column flex-md-row align-items-stretch overflow-hidden">
+        <!-- Sección informativa de bienvenida -->
+        <div class="information d-flex flex-column justify-content-center text-center p-4">
+            <div class="info-childs">
+                <h2>Bienvenido</h2>
+                <p>Para unirte a nuestra comunidad por favor Inicia Sesión con tus datos</p>
+                <input type="button" class="btn btn-outline-light mt-3" value="Iniciar Sesión" id="sign-in">
+            </div>
+        </div>
+        <!-- Sección del formulario de registro -->
+        <div class="form-information d-flex flex-column justify-content-center p-4">
+            <div class="form-information-childs">
+                <h2>Crear una Cuenta</h2>
+                <!-- Íconos sociales para registro -->
+                <div class="icons d-flex justify-content-center my-3">
+                    <i class='bx bxl-google mx-2'></i>
+                    <i class='bx bxl-github mx-2'></i>
+                    <i class='bx bxl-linkedin mx-2'></i>
+                </div>
+                <p>o usa tu email para registrarte</p>
+                <!-- Formulario de registro -->
+                <form class="form form-register needs-validation mx-auto w-100" style="max-width: 400px;" novalidate>
+                    <!-- Campo para el nombre de usuario -->
+                    <div class="mb-3">
+                        <label class="d-flex align-items-center">
+                            <i class='bx bx-user'></i>
+                            <input type="text" class="form-control ms-2" placeholder="Nombre Usuario" name="userName">
+                        </label>
+                    </div>
+                    <!-- Campo para el correo electrónico -->
+                    <div class="mb-3">
+                        <label class="d-flex align-items-center">
+                            <i class='bx bx-envelope'></i>
+                            <input type="email" class="form-control ms-2" placeholder="Correo Electronico" name="userEmail">
+                        </label>
+                    </div>
+                    <!-- Campo para la contraseña -->
+                    <div class="mb-3">
+                        <label class="d-flex align-items-center">
+                            <i class='bx bx-lock-alt'></i>
+                            <input type="password" class="form-control ms-2" placeholder="Contraseña" name="userPassword">
+                        </label>
+                    </div>
+                    <!-- Campo para el peso -->
+                    <div class="mb-3">
+                        <label class="d-flex align-items-center">
+                            <i class='bx bx-body'></i>
+                            <input type="text" class="form-control ms-2" placeholder="Peso" name="userPeso">
+                        </label>
+                    </div>
+                    <!-- Campo para la altura -->
+                    <div class="mb-3">
+                        <label class="d-flex align-items-center">
+                            <i class='bx bx-swim'></i>
+                            <input type="text" class="form-control ms-2" placeholder="Altura" name="userAltura">
+                        </label>
+                    </div>
+                    <!-- Botón para enviar el formulario -->
+                    <input type="submit" class="btn btn-success w-100 mt-3" value="Registrarse">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contenedor para el formulario de inicio de sesión -->
+    <div class="container-form login hide d-flex flex-column flex-md-row align-items-stretch">
+        <!-- Sección informativa de bienvenida -->
+        <div class="information d-flex flex-column justify-content-center text-center p-4">
+            <div class="info-childs">
+                <h2>¡¡Bienvenido nuevamente!!</h2>
+                <p>Para unirte a nuestra comunidad por favor Inicia Sesión con tus datos</p>
+                <input type="button" class="btn btn-outline-light mt-3" value="Registrarse" id="sign-up">
+            </div>
+        </div>
+        <!-- Sección del formulario de inicio de sesión -->
+        <div class="form-information d-flex flex-column justify-content-center">
+            <div class="form-information-childs">
+                <h2>Iniciar Sesión</h2>
+                <!-- Íconos sociales para iniciar sesión -->
+                <div class="icons d-flex justify-content-center my-3">
+                    <i class='bx bxl-google mx-2'></i>
+                    <i class='bx bxl-github mx-2'></i>
+                    <i class='bx bxl-linkedin mx-2'></i>
+                </div>
+                <p>o Iniciar Sesión con una cuenta</p>
+                <!-- Formulario de inicio de sesión -->
+                <form class="form form-login needs-validation" novalidate>
+                    <!-- Campo para el correo electrónico -->
+                    <div class="mb-3">
+                        <label class="d-flex align-items-center">
+                            <i class='bx bx-envelope'></i>
+                            <input type="email" class="form-control ms-2" placeholder="Correo Electronico" name="userEmail">
+                        </label>
+                    </div>
+                    <!-- Campo para la contraseña -->
+                    <div class="mb-3">
+                        <label class="d-flex align-items-center">
+                            <i class='bx bx-lock-alt'></i>
+                            <input type="password" class="form-control ms-2" placeholder="Contraseña" name="userPassword">
+                        </label>
+                    </div>
+                    <!-- Botón para iniciar sesión -->
+                    <input type="submit" class="btn btn-success w-100 mt-3" value="Iniciar Sesión">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS para funcionalidades dinámicas -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Archivo JS personalizado -->
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url(img/2.jpg);
+    background-size: cover;
+  }/*en el apartado de body estamos centrando login con flexbox y agregando la imagen que tendra de fondo*/
+  
+  .container-form {
+    display: flex;
+    border-radius: 20px;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, .1);
+    height: 600px;
+    max-width: 900px;
+    transition: all 1s ease;
+    margin: 10px;
+  }/*Se le pondra una transicion de un segundo*/
+  /*Este apartado sera el formulario o el cuadro que tendra nuestro login donde usaremos flexbox para posicionar los apartados 1 y 2 del html uno al lado del otro*/
+  
+  .information {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: #03c307;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }/*Este es el apartado izquierdo del login */
+  /*en este apartado se encontrara el color del fondo izquierdo, el centrado del apartado izquierdo y el bordeado de las puntas del container */
+  
+  .info-childs {
+    width: 100%;
+    padding: 0 30px;
+  }/*Este es el contenedor que tiene el texto de bienvenido y el parrafo debajo de este*/
+  
+  .info-childs h2 {
+    font-size: 2.5rem;
+    color: #ffffff;
+  }/*este es el css del titulo de bienvenido*/
+  
+  .info-childs p {
+    margin: 15px 0;
+    color: #ffffff;
+  }/*este es el css del parrafo del info-childs*/
+  
+  .info-childs input {
+    background-color: transparent;
+    outline: none;
+    border: solid 2px #ffffff;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color .3s ease;
+  }/*Este es el apartado del boton de la zona izquierda de nuestro login en donde vamos a poder interacuar para pasar al formulario de inicio de sesion*/
+  /*En la zona del boton vamos a resaltar principalmente la transicion*/
+  .info-childs input:hover {
+    background-color: #7bff7d;
+    border: none;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+  }/*Este es el apartado que servira para que cuando pasemos el cursor por encima del boton haga que el boton cambie de color*/
+  
+  .form-information {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    text-align: center;
+    background-color: #f8f8f8;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }/*Esta es la zona derecha del login donde se encontraran los formularion donde podremos ingresar la informacion */
+  
+  .form-information-childs {
+    padding: 0 30px;
+  }/*Este apartado es el div que contendra toda la zona que va desde el titulo hasta el final del formulario*/
+  
+  .form-information-childs h2 {
+    color: #333;
+    font-size: 2rem;
+  }/*Este es el titulo del div que guarda todo el formulario*/
+  
+  .form-information-childs p {
+    color: #555;
+  }/*Este es el parrafo del div que guarda todo el formulario*/
+  
+  .icons {
+    margin: 15px 0;
+  }/*Este es el div de los iconos*/
+  
+  .icons i {
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    margin: 0 10px;
+    color: #03c307;
+    border: solid thin #03c307;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+  }/*Este es el apartado de los iconos del formulario donde principalmente se les da el tamaño, el espacio dentro del bordeado y la transicion para que haya color cuando pasemos el cursor por encima del icono */
+  
+  .icons i:hover {
+    background-color: #7bff7d;
+    color: #fff;
+  }/*esta es la parte donde se le pone el color cuando se pasa el cursor por encima del icono*/
+  
+  .form {
+    margin: 30px 0 0 0;
+  }/*Apartado de las margenes que tendra el formulario*/
+  
+  .form label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    padding: 0 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+  }/*Este apartado es el formulario del login*/
+  
+  .form label input {
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    color: #333;
+  }/*En esta parte estamos especificando que la zona derecha del login utilice el 100% del espacio que tiene y el espacio dentro de los campos*/
+  
+  .form label i {
+    color: #a7a7a7;
+  }/*En este apartado se le aclaran un poco el color a los iconos que estan dentro de los campos*/
+  
+  .form input[type="submit"] {
+    background-color: #03c307;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+  }/*Esta zona del codigo esta hecha para el boton */
+  
+  .form input[type="submit"]:hover {
+    background-color: #7bff7d;
+  }/*Esta parte funciona para que cuando pasemos el cursor por encima del boton este se torne de otro color*/
+  
+  .hide {
+    position: absolute;
+    transform: translateY(-300%);
+  } /*Esta zona servira para que el formulario de inicio de sesion desaparezca y asi poder hacer que el apartado de login sea mas interactivo*/
+  /*La linea de posicion absoluta sirve para que uno de los formularios se pose detras del otro en este caso, el formulario de registro*/
+  
+  /*Esta zona esta hecha para hacer el responsive de la pagina*/
+  @media screen and (max-width:750px) {
+    html {
+      font-size: 12px;
+    }/*Con este pequeño codigo de html podremos alterar el tamaño de la letra cuando el formulario sea menor a 750px*/
+  }
+  
+  @media screen and (max-width:580px) {
+    html {
+      font-size: 15px;
+    }/*Con este pequeño codigo de html podremos alterar el tamaño de la letra cuando el formulario sea menor a 580px y esta media encerrara la parte responsive del login*/
+  
+    .container-form {
+      height: auto;
+      flex-direction: column;
+    }/*Este apartado sirve para las pantallas pequeñas, especificamente para que la parte izquierda del login se ponga encima de la parte derecha donde se encuentra el formulario*/
+  
+    .information {
+      width: 100%;
+      padding: 20px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0;
+    }/*esta zona esta especizada para que la parte izquierda del login tenga un buen tamaño y no se vea cortada o mal alineada con el formulario*/
+  
+    .form-information {
+      width: 100%;
+      padding: 20px;
+      border-bottom-left-radius: 20px;
+      border-top-right-radius: 0;
+    }/*Esta zona tiene la misma funcion que la zona information de arriba, que sirve para acomodarse segun el tamaño de la pagina*/
+  }
