@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-image: url(img/2.jpg);
+    background-image: url(../img/Fondologin.jpg);
     background-size: cover;
   }/*en el apartado de body estamos centrando login con flexbox y agregando la imagen que tendra de fondo*/
   
