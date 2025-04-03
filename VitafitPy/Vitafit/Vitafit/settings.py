@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'landingpage.apps.LandingpageConfig',
+    'landingpage',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'Vitafit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'vitafitpy',
+        'NAME': 'vitafitpyt',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
