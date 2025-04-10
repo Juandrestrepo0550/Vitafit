@@ -257,6 +257,7 @@ body {
 
 .btn-secondary:is(:hover, :focus) {
     background-color: var(--rich-black-fogra-29-1);
+
 }
 
 .w-100 {
@@ -383,6 +384,8 @@ body {
   #HEADER
 \*-----------------------------------*/
 
+
+
 .header .btn {
     display: none;
 }
@@ -406,7 +409,7 @@ body {
 
 .logo {
     color: var(--rich-black-fogra-29-1);
-    font-family: var(--ff-catamaran);
+    font-family: var(--ff-rubik);
     font-size: 3.5rem;
     font-weight: var(--fw-900);
     display: flex;
@@ -453,6 +456,7 @@ body {
     place-content: center;
     visibility: hidden;
     transition: 0.25s var(--cubic-in);
+    
 }
 
 .navbar.active {
@@ -1251,12 +1255,14 @@ body {
     .navbar-list {
         display: flex;
         gap: 10px;
+        
     }
     .navbar-link {
         color: var(--white);
-        font-size: unset;
+        font-size: 15px;
         padding: 0 10px;
         margin-block-end: 0;
+        text-decoration: none;
     }
     .header.active .navbar-link {
         color: var(--rich-black-fogra-29-1);

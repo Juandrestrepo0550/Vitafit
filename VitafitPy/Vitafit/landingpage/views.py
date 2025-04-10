@@ -16,6 +16,7 @@ def index(request):
 def login(request):
     return render(request, 'login.html')
 
+<<<<<<< HEAD
 def register(request):
     if request.method == 'POST':
         nickname = request.POST('nicknames')
@@ -43,3 +44,7 @@ def register(request):
         return redirect('login')  # Redirige a donde lo necesites después del registro
 
     return render(request, 'Vitafit/landingpage/login.html')
+=======
+def adminpage(request):
+    return render(request, 'dashboard.html')
+>>>>>>> 9784e266c2f4109c726a77594b6737b054cab221
