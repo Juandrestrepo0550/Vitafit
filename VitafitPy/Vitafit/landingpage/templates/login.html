@@ -132,23 +132,29 @@
                 </div>
                 <p>o Iniciar Sesión con una cuenta</p>
                 <!-- Formulario de inicio de sesión -->
-                <form class="form form-login needs-validation" novalidate>
+                <form class="form form-login needs-validation" novalidate method='post' action="{% url 'inicio_sesion' %}">
+                    {% csrf_token %}
                     <!-- Campo para el correo electrónico -->
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-envelope'></i>
-                            <input type="email" class="form-control ms-2" placeholder="Correo Electronico" name="userEmail">
+                            <input type="email" class="form-control ms-2" placeholder="Correo Electronico" name="correo" required>
                         </label>
                     </div>
                     <!-- Campo para la contraseña -->
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-lock-alt'></i>
-                            <input type="password" class="form-control ms-2" placeholder="Contraseña" name="userPassword">
+                            <input type="password" class="form-control ms-2" placeholder="Contraseña" name="contrasena" required>
                         </label>
                     </div>
                     <!-- Botón para iniciar sesión -->
                     <input type="submit" class="btn btn-success w-100 mt-3" value="Iniciar Sesión">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
                 </form>
             </div>
         </div>

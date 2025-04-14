@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from django.utils import timezone
 from .models import Usuarios
+from django.contrib.auth.hashers import check_password
 
 def index(request):
     return render(request, 'index.html')
@@ -50,3 +51,32 @@ def register(request):
         return redirect('login')
 
     return render(request, 'Vitafit/landingpage/login.html')
+
+def inicio_sesion(request):
+        correo = request.POST.get('correo', '').strip()
+        contrasena = request.POST.get('contrasena', '').strip()
+
+        # Validar campos vacíos
+        if not correo or not contrasena:
+            messages.error(request, "Por favor ingresa correo y contraseña.")
+            return render(request, 'login.html')
+        
+        try:
+            usuario = Usuarios.objects.get(correo=correo)
+        except Usuarios.DoesNotExist:
+            messages.error(request, "El correo no está registrado.")
+            return render(request, 'login.html')
+        
+        
+        # Validar contraseña
+        if check_password(contrasena, usuario.contrasena):
+            # Guardar datos en sesión si quieres (opcional)
+            request.session['usuario_id'] = usuario.id
+            request.session['usuario_nombre'] = usuario.nickname
+            messages.success(request, f"¡Bienvenido {usuario.nickname}!")
+            return redirect('index')  # Redirige a la página principal o dashboard
+        else:
+            messages.error(request, "Contraseña incorrecta.")
+            return render(request, 'login.html')
+        
+        return render(request, 'login.html')
