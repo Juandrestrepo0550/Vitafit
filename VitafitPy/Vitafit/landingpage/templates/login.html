@@ -41,22 +41,6 @@
                 <form action="{% url 'register' %}" class="form form-register needs-validation mx-auto w-100" style="max-width: 400px;" novalidate method="post">
                     {% csrf_token %}
 
-                    <!-- Campo para el nombre 
-                    <div class="mb-3">
-                        <label class="d-flex align-items-center">
-                            <i class='bx bx-user'></i>
-                            <input type="text" class="form-control ms-2" placeholder="Nombre" name="nombres" value="{{ nombres }}">
-                        </label>
-                    </div>
-
-                     Campo para el Apellido
-                    <div class="mb-3">
-                        <label class="d-flex align-items-center">
-                            <i class='bx bx-user'></i>
-                            <input type="text" class="form-control ms-2" placeholder="Apellido" name="apellidos" value="{{ apellidos }}">
-                        </label>
-                    </div>-->
-
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-user'></i>
@@ -94,14 +78,9 @@
                     </div>
                     <!-- Botón para enviar el formulario -->
                     <input type="submit" class="btn btn-success w-100 mt-3" value="Registrarse">
-                    {% if messages %}
+                    {% if messages and form_type == "register" %}
     {% for message in messages %}
-        <div 
-            class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}" 
-            role="alert"
-        >
-            {{ message }}
-        </div>
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
     {% endfor %}
 {% endif %}
 
@@ -150,11 +129,11 @@
                     </div>
                     <!-- Botón para iniciar sesión -->
                     <input type="submit" class="btn btn-success w-100 mt-3" value="Iniciar Sesión">
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                        {% endfor %}
-                    {% endif %}
+                    {% if messages and form_type == "login" %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
                 </form>
             </div>
         </div>

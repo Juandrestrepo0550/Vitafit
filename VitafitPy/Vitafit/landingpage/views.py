@@ -19,22 +19,23 @@ def register(request):
         contrasena = request.POST.get('contrasena', '')
         repetircontrasena = request.POST.get('repetircontrasena', '')
 
-        # Separar el nombre completo en nombres y apellidos
         partes = nombre_completo.split()
         nombres = partes[0] if len(partes) > 0 else ''
         apellidos = ' '.join(partes[1:]) if len(partes) > 1 else ''
 
-        # Validar que todos los campos estén completos antes de continuar
         if not nombre_completo or not nickname or not correo or not contrasena or not repetircontrasena:
             messages.error(request, "Por favor completa todos los campos.")
-            return render(request, 'login.html')
+            return render(request, 'login.html', {'form_type': 'register'})
 
-        # Verificar que las contraseñas coincidan
         if contrasena != repetircontrasena:
             messages.error(request, "Las contraseñas no coinciden.")
-            return render(request, 'login.html')
+            return render(request, 'login.html', {'form_type': 'register'})
 
-        # Crear el nuevo usuario
+        # Validar si el correo ya está registrado
+        if Usuarios.objects.filter(correo=correo).exists():
+            messages.error(request, "El correo ya está registrado.")
+            return render(request, 'login.html', {'form_type': 'register'})
+
         usuario = Usuarios(
             nombres=nombres,
             apellidos=apellidos,
@@ -50,33 +51,29 @@ def register(request):
         messages.success(request, "Usuario registrado correctamente.")
         return redirect('login')
 
-    return render(request, 'Vitafit/landingpage/login.html')
+    return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'register'})
 
 def inicio_sesion(request):
-        correo = request.POST.get('correo', '').strip()
-        contrasena = request.POST.get('contrasena', '').strip()
+    correo = request.POST.get('correo', '').strip()
+    contrasena = request.POST.get('contrasena', '').strip()
 
-        # Validar campos vacíos
-        if not correo or not contrasena:
-            messages.error(request, "Por favor ingresa correo y contraseña.")
-            return render(request, 'login.html')
-        
-        try:
-            usuario = Usuarios.objects.get(correo=correo)
-        except Usuarios.DoesNotExist:
-            messages.error(request, "El correo no está registrado.")
-            return render(request, 'login.html')
-        
-        
-        # Validar contraseña
-        if check_password(contrasena, usuario.contrasena):
-            # Guardar datos en sesión si quieres (opcional)
-            request.session['usuario_id'] = usuario.id
-            request.session['usuario_nombre'] = usuario.nickname
-            messages.success(request, f"¡Bienvenido {usuario.nickname}!")
-            return redirect('index')  # Redirige a la página principal o dashboard
-        else:
-            messages.error(request, "Contraseña incorrecta.")
-            return render(request, 'login.html')
-        
-        return render(request, 'login.html')
+    if not correo or not contrasena:
+        messages.error(request, "Por favor ingresa correo y contraseña.")
+        return render(request, 'login.html', {'form_type': 'login'})
+
+    usuarios = Usuarios.objects.filter(correo=correo)
+
+    if not usuarios.exists():
+        messages.error(request, "El correo no está registrado.")
+        return render(request, 'login.html', {'form_type': 'login'})
+
+    usuario = usuarios.first()
+
+    if check_password(contrasena, usuario.contrasena):
+        request.session['usuario_id'] = usuario.id
+        request.session['usuario_nombre'] = usuario.nickname
+        messages.success(request, f"¡Bienvenido {usuario.nickname}!")
+        return redirect('index')
+    else:
+        messages.error(request, "Contraseña incorrecta.")
+        return render(request, 'login.html', {'form_type': 'login'})

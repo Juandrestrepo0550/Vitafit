@@ -15,3 +15,37 @@ btnSignUp.addEventListener("click", e => {
 }) //este bloque de codigo es el mismo bloque que el de arriba pero la diferencia es que este bloque va dirigido hacia el formulario de registro
 
 //Con este archivo de javascript vamos a añadir o quitar un formulario ademas que si nos fijamos en la clase hide que pusimos en el html nos daremos cuenta que cuando uno de los 2 formularios sube hace que el hide del html cambie al contenedor que este escondido, este cambio lo puedes ver desde la consola del navegador que estes usando
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const signUpBtn = document.getElementById("sign-up");
+    const signInBtn = document.getElementById("sign-in");
+
+    const loginContainer = document.querySelector(".container-form.login");
+    const registerContainer = document.querySelector(".container-form.register");
+
+    const loginForm = document.querySelector(".form-login");
+    const registerForm = document.querySelector(".form-register");
+
+    function limpiarFormulario(formulario) {
+        formulario.reset(); // Limpia los inputs
+        const mensajes = formulario.querySelectorAll(".alert");
+        mensajes.forEach(msg => msg.remove()); // Borra los mensajes
+    }
+
+    if (signUpBtn) {
+        signUpBtn.addEventListener("click", function () {
+            loginContainer.classList.add("hide");
+            registerContainer.classList.remove("hide");
+            limpiarFormulario(loginForm);
+        });
+    }
+
+    if (signInBtn) {
+        signInBtn.addEventListener("click", function () {
+            registerContainer.classList.add("hide");
+            loginContainer.classList.remove("hide");
+            limpiarFormulario(registerForm);
+        });
+    }
+});
