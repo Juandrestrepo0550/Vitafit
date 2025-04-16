@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.utils import timezone
 from .models import Usuarios
 from django.contrib.auth.hashers import check_password
+from django.urls import reverse
 
 def index(request):
     return render(request, 'index.html')
@@ -49,7 +50,7 @@ def register(request):
         )
         usuario.save()
         messages.success(request, "Usuario registrado correctamente.")
-        return redirect('login')
+        return redirect(f"{reverse('inicio_sesion')}?registro=ok")
 
     return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'register'})
 

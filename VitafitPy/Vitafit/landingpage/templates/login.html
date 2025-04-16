@@ -78,6 +78,11 @@
                     </div>
                     <!-- Botón para enviar el formulario -->
                     <input type="submit" class="btn btn-success w-100 mt-3" value="Registrarse">
+                    {% if request.GET.registro == "ok" %}
+    {% with message="Usuario registrado correctamente" %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endwith %}
+{% endif %}
                     {% if messages and form_type == "register" %}
     {% for message in messages %}
         <div class="alert alert-{{ message.tags }}">{{ message }}</div>
