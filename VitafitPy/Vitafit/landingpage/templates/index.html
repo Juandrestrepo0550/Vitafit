@@ -2,676 +2,455 @@
 <html lang="en">
 
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="landingpage/bootstrap/bootstrap.min.css">
-
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
     <title>VitaFIT - Inicio</title>
 
-    <!-- 
-    - favicon
-  -->
-    <link rel="shortcut icon" href="../static/img/favicon.svg" type="image/svg+xml">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
 
-    <!-- 
-    - custom css link
-  -->
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- custom css link -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
-    <!-- 
-    - google font link
-  -->
+    <!-- google font link -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap" rel="stylesheet">
 
-    <!-- 
-    - preload img
-  -->
-    <link rel="preload" as="image" href="../static/img/hero-banner.png">
-    <link rel="preload" as="image" href="../static/img/hero-circle-one.png">
-    <link rel="preload" as="image" href="../static/img/hero-circle-two.png">
-    <link rel="preload" as="image" href="../static/img/heart-rate.svg">
-    <link rel="preload" as="image" href="../static/img/calories.svg">
+    <!-- preload img -->
+    <link rel="preload" as="image" href="{% static 'img/hero-banner.png' %}">
+    <link rel="preload" as="image" href="{% static 'img/hero-circle-one.png' %}">
+    <link rel="preload" as="image" href="{% static 'img/hero-circle-two.png' %}">
+    <link rel="preload" as="image" href="{% static 'img/heart-rate.svg' %}">
+    <link rel="preload" as="image" href="{% static 'img/calories.svg' %}">
 
 </head>
 
 <div class="custom-styles">
     <!-- Todo tu contenido -->
 
-
-
 <body id="top">
-    {% load static %}
-
-    <!-- 
-    - #HEADER
-  -->
-  <header class="header" data-header>
-    <div class="container">
-  
-      <a href="#" class="logo" style="text-decoration: none;">
-        <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" width="65" height="65" loading="lazy" alt="Trainer">
-        <span class="span">VitaFIT</span>
-      </a>
-  
-      <nav class="navbar" data-navbar>
-        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-          <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
-        </button>
-  
-        <ul class="navbar-list">
-          <li><a href="#home" class="navbar-link active" data-nav-link>Inicio</a></li>
-          <li><a href="#about" class="navbar-link" data-nav-link>Sobre nosotros</a></li>
-          <li><a href="#class" class="navbar-link" data-nav-link>Rutinas</a></li>
-          <li><a href="#blog" class="navbar-link" data-nav-link>Plan nutricional</a></li>
-          <li><a href="#" class="navbar-link" data-nav-link>Calculadora de macros</a></li>
-        </ul>
-      </nav>
-  
-      {% if request.session.usuario_id %}
-  <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
-{% else %}
-  <a href="{% url 'login' %}" class="btn btn-dark">Regístrate</a>
-{% endif %}
-  
-      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </button>
-  
-    </div>
-  </header>
-
-
-
+    
+    <!-- HEADER -->
+    <header class="header" data-header>
+        <div class="container">
+      
+          <a href="#" class="logo" style="text-decoration: none;">
+            <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" width="65" height="65" loading="lazy" alt="Trainer">
+            <span class="span">VitaFIT</span>
+          </a>
+      
+          <nav class="navbar" data-navbar>
+            <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+              <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
+            </button>
+      
+            <ul class="navbar-list">
+              <li><a href="#home" class="navbar-link active" data-nav-link>Inicio</a></li>
+              <li><a href="#about" class="navbar-link" data-nav-link>Sobre nosotros</a></li>
+              <li><a href="#class" class="navbar-link" data-nav-link>Rutinas</a></li>
+              <li><a href="#blog" class="navbar-link" data-nav-link>Plan nutricional</a></li>
+              <li><a href="#" class="navbar-link" data-nav-link>Calculadora de macros</a></li>
+            </ul>
+          </nav>
+      
+          {% if request.session.usuario_id %}
+          <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
+          {% else %}
+          <a href="{% url 'login' %}" class="btn btn-dark">Regístrate</a>
+          {% endif %}
+      
+          <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+          </button>
+      
+        </div>
+    </header>
 
     <main>
         <article>
-
-            <!-- 
-        - #HERO
-      -->
-
-            <section class="section hero bg-dark has-after has-bg-image" id="home" aria-label="hero" data-section style="background-image: url('../static/img/hero-bg.png')">
+            <!-- HERO SECTION -->
+            <section class="section hero bg-dark has-after has-bg-image" id="home" aria-label="hero" data-section style="background-image: url('{% static 'img/hero-bg.png' %}')">
                 <div class="container">
-
                     <div class="hero-content">
-
                         <p class="hero-subtitle">
                             <strong class="strong">El mejor</strong>Club Fitness
                         </p>
-
                         <h1 class="h1 hero-title">Trabaja duro para una mejor vida</h1>
-
                         <p class="section-text">
                             Duis mollis felis quis libero dictum vehicula. Duis dictum lorem mi, a faucibus nisi eleifend eu.
                         </p>
-
                         <a href="#" class="btn btn-primary">Empieza ahora</a>
-
                     </div>
 
                     <div class="hero-banner">
-
-                        <img src="../static/img/hero-banner.png" width="660" height="753" alt="hero banner" class="w-100">
-
-                        <img src="../static/img/hero-circle-one.png" width="666" height="666" aria-hidden="true" alt="" class="circle circle-1">
-                        <img src="../static/img/hero-circle-two.png" width="666" height="666" aria-hidden="true" alt="" class="circle circle-2">
-
-                        <img src="../static/img/heart-rate.svg" width="255" height="270" alt="heart rate" class="abs-img abs-img-1">
-                        <img src="../static/img/calories.svg" width="348" height="224" alt="calories" class="abs-img abs-img-2">
-
+                        <img src="{% static 'img/hero-banner.png' %}" width="660" height="753" alt="hero banner" class="w-100">
+                        <img src="{% static 'img/hero-circle-one.png' %}" width="666" height="666" aria-hidden="true" alt="" class="circle circle-1">
+                        <img src="{% static 'img/hero-circle-two.png' %}" width="666" height="666" aria-hidden="true" alt="" class="circle circle-2">
+                        <img src="{% static 'img/heart-rate.svg' %}" width="255" height="270" alt="heart rate" class="abs-img abs-img-1">
+                        <img src="{% static 'img/calories.svg' %}" width="348" height="224" alt="calories" class="abs-img abs-img-2">
                     </div>
-
                 </div>
             </section>
 
-
-
-
-
-            <!-- 
-        - #ABOUT
-      -->
-
+            <!-- ABOUT SECTION -->
             <section class="section about" id="about" aria-label="about">
                 <div class="container">
-
                     <div class="about-banner has-after">
-                        <img src="../static/img/about-banner.png" width="660" height="648" loading="lazy" alt="about banner" class="w-100">
-
-                        <img src="../static/img/about-circle-one.png" width="660" height="534" loading="lazy" aria-hidden="true" alt="" class="circle circle-1">
-                        <img src="../static/img/about-circle-two.png" width="660" height="534" loading="lazy" aria-hidden="true" alt="" class="circle circle-2">
-
-                        <img src="../static/img/fitness.png" width="650" height="154" loading="lazy" alt="fitness" class="abs-img w-100">
+                        <img src="{% static 'img/about-banner.png' %}" width="660" height="648" loading="lazy" alt="about banner" class="w-100">
+                        <img src="{% static 'img/about-circle-one.png' %}" width="660" height="534" loading="lazy" aria-hidden="true" alt="" class="circle circle-1">
+                        <img src="{% static 'img/about-circle-two.png' %}" width="660" height="534" loading="lazy" aria-hidden="true" alt="" class="circle circle-2">
+                        <img src="{% static 'img/fitness.png' %}" width="650" height="154" loading="lazy" alt="fitness" class="abs-img w-100">
                     </div>
 
                     <div class="about-content">
-
                         <p class="section-subtitle">Sobre nosotros</p>
-
                         <h2 class="h2 section-title">Bienvenido al mejor club fitness</h2>
-
                         <p class="section-text">
                             Nam ut hendrerit leo. Aenean vel ipsum nunc. Curabitur in tellus vitae nisi aliquet dapibus non et erat. Pellentesque porta sapien non accumsan dignissim curabitur sagittis nulla sit amet dolor feugiat.
                         </p>
-
                         <p class="section-text">
                             Integer placerat vitae metus posuere tincidunt. Nullam suscipit ante ac aliquet viverra vestibulum ante ipsum primis.
                         </p>
 
                         <div class="wrapper">
-
                             <div class="about-coach">
-
                                 <figure class="coach-avatar">
-                                    <img src="../static/img/DSJ.png" width="65" height="65" loading="lazy" alt="Trainer">
+                                    <img src="{% static 'img/DSJ.png' %}" width="65" height="65" loading="lazy" alt="Trainer">
                                 </figure>
-
                                 <div>
                                     <h3 class="h3 coach-name">DSJ</h3>
-
                                     <p class="coach-title">Compañia de software</p>
                                 </div>
-
                             </div>
-
                             <a href="#" class="btn btn-primary">Más información</a>
-
                         </div>
-
                     </div>
-
                 </div>
             </section>
 
-
-
-
-
-            <!-- 
-        - #VIDEO
-      -->
-
+            <!-- VIDEO SECTION -->
             <section class="section video" aria-label="video">
                 <div class="container">
-
-                    <div class="video-card has-before has-bg-image" style="background-image: url('../static/img/video-banner.jpg')">
-
+                    <div class="video-card has-before has-bg-image" style="background-image: url('{% static 'img/video-banner.jpg' %}')">
                         <h2 class="h2 card-title">Encuentra una vida fitness</h2>
-
                         <button class="play-btn" aria-label="play video">
-              <ion-icon name="play-sharp" aria-hidden="true"></ion-icon>
-            </button>
-
+                            <ion-icon name="play-sharp" aria-hidden="true"></ion-icon>
+                        </button>
                         <a href="#" class="btn-link has-before">Más aquí</a>
-
                     </div>
-
                 </div>
             </section>
 
-
-
-
-
-            <!-- 
-        - #CLASS
-      -->
-
-            <section class="section class bg-dark has-bg-image" id="class" aria-label="class" style="background-image: url('../static/img/classes-bg.png')">
+            <!-- CLASS SECTION -->
+            <section class="section class bg-dark has-bg-image" id="class" aria-label="class" style="background-image: url('{% static 'img/classes-bg.png' %}')">
                 <div class="container">
-
                     <p class="section-subtitle">Nuestras rutinas</p>
-
                     <h2 class="h2 section-title text-center">Las mas destacadas</h2>
 
                     <ul class="class-list has-scrollbar">
-
                         <li class="scrollbar-item">
                             <div class="class-card">
-
                                 <figure class="card-banner img-holder" style="--width: 416; --height: 240;">
-                                    <img src="../static/img/class-1.jpg" width="416" height="240" loading="lazy" alt="Weight Lifting" class="img-cover">
+                                    <img src="{% static 'img/class-1.jpg' %}" width="416" height="240" loading="lazy" alt="Weight Lifting" class="img-cover">
                                 </figure>
-
                                 <div class="card-content">
-
                                     <div class="title-wrapper">
-                                        <img src="../static/img/Pierna.png" width="52" height="52" aria-hidden="true" alt="" class="title-icon">
-
+                                        <img src="{% static 'img/Pierna.png' %}" width="52" height="52" aria-hidden="true" alt="" class="title-icon">
                                         <h3 class="h3">
                                             <a href="#" class="card-title">Pierna</a>
                                         </h3>
                                     </div>
-
                                     <p class="card-text">
                                         Suspendisse nisi libero, cursus ac magna sit amet, fermentum imperdiet nisi.
                                     </p>
-
                                     <div class="card-progress">
-
                                         <div class="progress-wrapper">
                                             <p class="progress-label">Progreso</p>
-
                                             <span class="progress-value">15%</span>
                                         </div>
-
                                         <div class="progress-bg">
                                             <div class="progress-bar" style="width: 15%"></div>
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
                         </li>
 
                         <li class="scrollbar-item">
                             <div class="class-card">
-
                                 <figure class="card-banner img-holder" style="--width: 416; --height: 240;">
-                                    <img src="../static/img/class-2.jpg" width="416" height="240" loading="lazy" alt="Cardio & Strenght" class="img-cover">
+                                    <img src="{% static 'img/class-2.jpg' %}" width="416" height="240" loading="lazy" alt="Cardio & Strenght" class="img-cover">
                                 </figure>
-
                                 <div class="card-content">
-
                                     <div class="title-wrapper">
-                                        <img src="../static/img/class-icon-2.png" width="52" height="52" aria-hidden="true" alt="" class="title-icon">
-
+                                        <img src="{% static 'img/class-icon-2.png' %}" width="52" height="52" aria-hidden="true" alt="" class="title-icon">
                                         <h3 class="h3">
                                             <a href="#" class="card-title">Cardio</a>
                                         </h3>
                                     </div>
-
                                     <p class="card-text">
                                         Suspendisse nisi libero, cursus ac magna sit amet, fermentum imperdiet nisi.
                                     </p>
-
                                     <div class="card-progress">
-
                                         <div class="progress-wrapper">
                                             <p class="progress-label">Progrerso</p>
-
                                             <span class="progress-value">70%</span>
                                         </div>
-
                                         <div class="progress-bg">
                                             <div class="progress-bar" style="width: 70%"></div>
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
                         </li>
 
                         <li class="scrollbar-item">
                             <div class="class-card">
-
                                 <figure class="card-banner img-holder" style="--width: 416; --height: 240;">
-                                    <img src="../static/img/class-3.jpg" width="416" height="240" loading="lazy" alt="Power Yoga" class="img-cover">
+                                    <img src="{% static 'img/class-3.jpg' %}" width="416" height="240" loading="lazy" alt="Power Yoga" class="img-cover">
                                 </figure>
-
                                 <div class="card-content">
-
                                     <div class="title-wrapper">
-                                        <img src="../static/img/class-icon-3.png" width="52" height="52" aria-hidden="true" alt="" class="title-icon">
-
+                                        <img src="{% static 'img/class-icon-3.png' %}" width="52" height="52" aria-hidden="true" alt="" class="title-icon">
                                         <h3 class="h3">
                                             <a href="#" class="card-title">Yoga</a>
                                         </h3>
                                     </div>
-
                                     <p class="card-text">
                                         Suspendisse nisi libero, cursus ac magna sit amet, fermentum imperdiet nisi.
                                     </p>
-
                                     <div class="card-progress">
-
                                         <div class="progress-wrapper">
                                             <p class="progress-label">progreso</p>
-
                                             <span class="progress-value">90%</span>
                                         </div>
-
                                         <div class="progress-bg">
                                             <div class="progress-bar" style="width: 90%"></div>
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
                         </li>
 
                         <li class="scrollbar-item">
                             <div class="class-card">
-
                                 <figure class="card-banner img-holder" style="--width: 416; --height: 240;">
-                                    <img src="../static/img/class-4.jpg" width="416" height="240" loading="lazy" alt="The Fitness Pack" class="img-cover">
+                                    <img src="{% static 'img/class-4.jpg' %}" width="416" height="240" loading="lazy" alt="The Fitness Pack" class="img-cover">
                                 </figure>
-
                                 <div class="card-content">
-
                                     <div class="title-wrapper">
-                                        <img src="../static/img/class-icon-4.png" width="52" height="52" aria-hidden="true" alt="" class="title-icon">
-
+                                        <img src="{% static 'img/class-icon-4.png' %}" width="52" height="52" aria-hidden="true" alt="" class="title-icon">
                                         <h3 class="h3">
                                             <a href="#" class="card-title">Full Body</a>
                                         </h3>
                                     </div>
-
                                     <p class="card-text">
                                         Suspendisse nisi libero, cursus ac magna sit amet, fermentum imperdiet nisi.
                                     </p>
-
                                     <div class="card-progress">
-
                                         <div class="progress-wrapper">
                                             <p class="progress-label">Progreso</p>
-
                                             <span class="progress-value">60%</span>
                                         </div>
-
                                         <div class="progress-bg">
                                             <div class="progress-bar" style="width: 60%"></div>
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
                         </li>
-
                     </ul>
-
                 </div>
             </section>
 
-
-
-
-
-            <!-- 
-        - #BLOG
-      -->
-
+            <!-- BLOG SECTION -->
             <section class="section blog" id="blog" aria-label="blog">
                 <div class="container">
-
                     <p class="section-subtitle">Novedades</p>
-
                     <h2 class="h2 section-title text-center">Últimas noticias del blog</h2>
 
                     <ul class="blog-list has-scrollbar">
-
                         <li class="scrollbar-item">
                             <div class="blog-card">
-
                                 <div class="card-banner img-holder" style="--width: 440; --height: 270;">
-                                    <img src="../static/img/blog-1.jpg" width="440" height="270" loading="lazy" alt="Going to the gym for the first time" class="img-cover">
-
+                                    <img src="{% static 'img/blog-1.jpg' %}" width="440" height="270" loading="lazy" alt="Going to the gym for the first time" class="img-cover">
                                     <time class="card-meta" datetime="2022-07-07">6 de Julio 2024</time>
                                 </div>
-
                                 <div class="card-content">
-
                                     <h3 class="h3">
                                         <a href="#" class="card-title">Haciendo mi vida fitnes por primera vez</a>
                                     </h3>
-
                                     <p class="card-text">
                                         Praesent id ipsum pellentesque lectus dapibus condimentum curabitur eget risus quam. In hac habitasse platea dictumst.
                                     </p>
-
                                     <a href="#" class="btn-link has-before">Leer Más.</a>
-
                                 </div>
-
                             </div>
                         </li>
 
                         <li class="scrollbar-item">
                             <div class="blog-card">
-
                                 <div class="card-banner img-holder" style="--width: 440; --height: 270;">
-                                    <img src="../static/img/blog-2.jpg" width="440" height="270" loading="lazy" alt="Parturient accumsan cacus pulvinar magna" class="img-cover">
-
+                                    <img src="{% static 'img/blog-2.jpg' %}" width="440" height="270" loading="lazy" alt="Parturient accumsan cacus pulvinar magna" class="img-cover">
                                     <time class="card-meta" datetime="2022-07-07">7 de mayo 2022</time>
                                 </div>
-
                                 <div class="card-content">
-
                                     <h3 class="h3">
                                         <a href="#" class="card-title">Parturient accumsan cacus pulvinar magna</a>
                                     </h3>
-
                                     <p class="card-text">
                                         Praesent id ipsum pellentesque lectus dapibus condimentum curabitur eget risus quam. In hac habitasse platea dictumst.
                                     </p>
-
                                     <a href="#" class="btn-link has-before">Leer Más.</a>
-
                                 </div>
-
                             </div>
                         </li>
-
-
-
                     </ul>
-
                 </div>
             </section>
-
         </article>
     </main>
 
-
-
-
-
-    <!-- 
-    - #FOOTER
-  -->
-
+    <!-- FOOTER -->
     <footer class="footer">
-
-        <div class="section footer-top bg-dark has-bg-image" style="background-image: url('../static/img/footer-bg.png')">
+        <div class="section footer-top bg-dark has-bg-image" style="background-image: url('{% static 'img/footer-bg.png' %}')">
             <div class="container">
-
                 <div class="footer-brand">
-
                     <a href="#" class="logo">
-                        <img src="../static/img/vitafitlogo_sinfondo.png" width="65" height="65" loading="lazy" alt="Trainer">
-
+                        <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" width="65" height="65" loading="lazy" alt="Trainer">
                         <span class="span">VitaFIT</span>
                     </a>
-
                     <p class="footer-brand-text">
                         Etiam suscipit fringilla ullamcorper sed malesuada urna nec odio.
                     </p>
-
-                    
                 </div>
 
                 <ul class="footer-list">
-
                     <li>
                         <p class="footer-list-title has-before">Nuestros links</p>
                     </li>
-
                     <li>
                         <a href="#" class="footer-link">Inicio</a>
                     </li>
-
                     <li>
                         <a href="#" class="footer-link">Sobre nosotros</a>
                     </li>
-
                     <li>
                         <a href="#" class="footer-link">Más informacón</a>
                     </li>
-
                     <li>
                         <a href="#" class="footer-link">Blog</a>
                     </li>
-
                     <li>
                         <a href="#" class="footer-link">Contactanos</a>
                     </li>
-
                 </ul>
 
                 <ul class="footer-list">
-
                     <li>
                         <p class="footer-list-title has-before">Contactanos</p>
                     </li>
-
                     <li class="footer-list-item">
                         <div class="icon">
                             <ion-icon name="location" aria-hidden="true"></ion-icon>
                         </div>
-
                         <address class="address footer-link">
-              Medellín, Colombia
-            </address>
+                            Medellín, Colombia
+                        </address>
                     </li>
-
                     <li class="footer-list-item">
                         <div class="icon">
                             <ion-icon name="call" aria-hidden="true"></ion-icon>
                         </div>
-
                         <div>
                             <a href="tel:3154998640" class="footer-link">3154998640</a>
-
                             <a href="tel:+573154998640" class="footer-link">+573154998640</a>
                         </div>
                     </li>
-
                     <li class="footer-list-item">
                         <div class="icon">
                             <ion-icon name="mail" aria-hidden="true"></ion-icon>
                         </div>
-
                         <div>
                             <a href="mailto:info@fitlife.com" class="footer-link">info@VitaFIT.com</a>
-
                             <a href="mailto:services@fitlife.com" class="footer-link">Servicios@VitaFIT.com</a>
                         </div>
                     </li>
-
                 </ul>
 
                 <ul class="footer-list">
-
                     <li>
                         <p class="footer-list-title has-before">Hoja informativa</p>
                     </li>
-
                     <li>
                         <form action="" class="footer-form">
                             <input type="email" name="email_address" aria-label="email" placeholder="Correo electronico" required class="input-field">
-
                             <button type="submit" class="btn btn-primary" aria-label="Submit">
-                <ion-icon name="chevron-forward-sharp" aria-hidden="true"></ion-icon>
-              </button>
+                                <ion-icon name="chevron-forward-sharp" aria-hidden="true"></ion-icon>
+                            </button>
                         </form>
                     </li>
-
                     <li>
                         <ul class="social-list">
-
                             <li>
                                 <a href="#" class="social-link">
                                     <ion-icon name="logo-facebook"></ion-icon>
                                 </a>
                             </li>
-
                             <li>
                                 <a href="#" class="social-link">
                                     <ion-icon name="logo-instagram"></ion-icon>
                                 </a>
                             </li>
-
                             <li>
                                 <a href="#" class="social-link">
                                     <ion-icon name="logo-twitter"></ion-icon>
                                 </a>
                             </li>
-
                         </ul>
                     </li>
-
                 </ul>
-
             </div>
         </div>
 
         <div class="footer-bottom">
             <div class="container">
-
                 <p class="copyright">
-                    &copy; 2025 VitaFIT. All Rights Reserved .</a>
+                    &copy; 2025 VitaFIT. All Rights Reserved .
                 </p>
-
                 <ul class="footer-bottom-list">
-
                     <li>
                         <a href="#" class="footer-bottom-link has-before">Politcas de privacidad</a>
                     </li>
-
                     <li>
                         <a href="#" class="footer-bottom-link has-before">Terminos y condiciones</a>
                     </li>
-
                 </ul>
-
             </div>
         </div>
-
     </footer>
 
-
-
-
-
-    <!-- 
-    - #BACK TO TOP
-  -->
-
+    <!-- BACK TO TOP -->
     <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
         <ion-icon name="caret-up-sharp" aria-hidden="true"></ion-icon>
     </a>
-
-
 </div>
 
+<!-- custom js link -->
+<script src="{% static 'js/script.js' %}" defer></script>
+<script src="{% static 'js/bootstrap.min.js' %}" defer></script>
 
-    <!-- 
-    - custom js link
-  -->
-    <script src="../static/js/script.js" defer></script>
-    <script src="../static/js/bootstrap.min.js" defer></script>
-
-    <!-- 
-    - ionicon link
-  -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<!-- ionicon link -->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
-
 </html>
