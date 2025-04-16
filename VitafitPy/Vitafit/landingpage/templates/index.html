@@ -72,7 +72,11 @@
         </ul>
       </nav>
   
-      <a href="#" class="btn btn-dark">Regístrate</a>
+      {% if request.session.usuario_id %}
+  <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
+{% else %}
+  <a href="{% url 'login' %}" class="btn btn-dark">Regístrate</a>
+{% endif %}
   
       <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
         <span class="line"></span>
