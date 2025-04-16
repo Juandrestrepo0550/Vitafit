@@ -6,12 +6,12 @@ from .models import Usuarios
 from django.contrib.auth.hashers import check_password
 from django.urls import reverse
 
+
 def index(request):
     return render(request, 'index.html')
 
 def login(request):
     return render(request, 'login.html')
-
 
 def register(request):
     if request.method == 'POST':
@@ -53,7 +53,6 @@ def register(request):
         messages.success(request, "Usuario registrado correctamente.")
         return redirect(f"{reverse('inicio_sesion')}?registro=ok")
 
-
     return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'register'})
 
 def inicio_sesion(request):
@@ -80,16 +79,3 @@ def inicio_sesion(request):
     else:
         messages.error(request, "Contraseña incorrecta.")
         return render(request, 'login.html', {'form_type': 'login'})
-
-    return render(request, 'Vitafit/landingpage/login.html')
-
-
-def cerrar_sesion(request):
-    request.session.flush()  # Borra toda la sesión
-    messages.success(request, "Has cerrado sesión exitosamente.")
-    return redirect('index')
-
-def adminpage(request):
-    return render(request, 'dashboard.html')
-
-
