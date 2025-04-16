@@ -79,3 +79,16 @@ def inicio_sesion(request):
     else:
         messages.error(request, "Contraseña incorrecta.")
         return render(request, 'login.html', {'form_type': 'login'})
+
+    return render(request, 'Vitafit/landingpage/login.html')
+
+
+def cerrar_sesion(request):
+    request.session.flush()  # Borra toda la sesión
+    messages.success(request, "Has cerrado sesión exitosamente.")
+    return redirect('index')
+
+def adminpage(request):
+    return render(request, 'dashboard.html')
+
+
