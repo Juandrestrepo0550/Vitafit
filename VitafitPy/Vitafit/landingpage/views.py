@@ -80,7 +80,6 @@ def inicio_sesion(request):
     else:
         messages.error(request, "Contraseña incorrecta.")
         return render(request, 'login.html', {'form_type': 'login'})
-
     return render(request, 'Vitafit/landingpage/login.html')
 
 
