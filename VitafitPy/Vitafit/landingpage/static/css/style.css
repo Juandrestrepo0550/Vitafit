@@ -547,12 +547,12 @@ body {
   }
   
   .auth-btn.login {
-    background-color: #007bff;
+    background-color: var(--rich-black-fogra-29-1);
     color: #fff;
   }
   
   .auth-btn.login:hover {
-    background-color: #0056b3;
+    background-color:  var(--rich-black-fogra-29-1);
   }
   
   .auth-btn.logout {
