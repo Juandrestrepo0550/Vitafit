@@ -457,7 +457,7 @@ body {
     left: 0;
     width: 100%;
     height: auto;
-    background-color: var(--coquelicot);
+    background-color: var(--white);
     visibility: hidden;
     opacity: 0;
     transform: translateY(-100%);
@@ -494,7 +494,7 @@ body {
 }
 
 .navbar-link:is(:hover, :focus, .active) {
-    color: var(--rich-black-fogra-29-1);
+    color: var(--rich-black-fogra-29);
 }
 
 
@@ -1186,7 +1186,7 @@ body {
 
 .navbar-link {
     font-size: var(--fs-5);
-    color: var(--white);
+    color: var(--rich-black-fogra-29);
     text-align: center;
     padding: 10px 0;
 }
