@@ -421,6 +421,7 @@ body {
     display: flex;
     align-items: center;
     margin-inline-start: -8px;
+    
 }
 
 .logo ion-icon {
@@ -493,9 +494,100 @@ body {
     transition: var(--transition-1);
 }
 
+.navbar-link:hover {
+    text-decoration: none;
+    color: var(--coquelicot); /* O el color que prefieras */
+  }
+  
+  .header .logo:hover {
+    
+    text-decoration: none;
+  }
+  .header.active .logo:hover {
+    color: var(--rich-black-fogra-29-1);
+    
+  }
+
+  
+
+  .logo-text {
+    color: var(--white);
+    transition: color 0.3s ease;
+  }
+  
+  .header.active .logo-text {
+    color: var(--rich-black-fogra-29-1);
+  }
+  
+  /* 👇 Evita que cambie de color al pasar el mouse */
+  .logo-text:hover {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  .header .logo-text { color: var(--white); }
+.header.active .logo-text { color: var(--rich-black-fogra-29-1); }
+
+
+
+
+  
+    
+
+.auth-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    border: none;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .auth-btn.login {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .auth-btn.login:hover {
+    background-color: #0056b3;
+  }
+  
+  .auth-btn.logout {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .auth-btn.logout:hover {
+    background-color: #a71d2a;
+  }
+  
+
+
+
 .navbar-link:is(:hover, :focus, .active) {
     color: var(--rich-black-fogra-29);
+    
 }
+
+a,
+.navbar-link,
+.logo {
+  text-decoration: none !important;
+}
+
+.navbar-link:hover,
+.logo:hover {
+  text-decoration: none !important;
+}
+
+.no-hover:hover {
+    text-decoration: none !important;
+    color: inherit !important;
+  }
+  
 
 
 /*-----------------------------------*\
@@ -1191,6 +1283,16 @@ body {
     padding: 10px 0;
 }
 
+.logo-text{
+    color: var(--rich-black-fogra-29);
+    text-decoration: none !important;
+}
+
+
+
+
+
+
 
      :root {
         /**
@@ -1247,6 +1349,10 @@ body {
     /**
    * HEADER
    */
+
+   .header:not(.active) .logo-text {
+    color: var(--white);
+  }
     .nav-open-btn,
     .nav-close-btn {
         display: none;
@@ -1260,6 +1366,13 @@ body {
         padding-block: 30px;
         transition: var(--transition-1);
     }
+
+    .logo-text{
+        color: var(--rich-black-fogra-29);
+        text-decoration: none !important;
+    }
+
+
     .header.active {
         transform: translateY(-100%);
         background-color: var(--white);
@@ -1314,6 +1427,8 @@ body {
     .header.active .btn:is(:hover, :focus) {
         background-color: var(--rich-black-fogra-29-1);
     }
+
+
     /**
    * HERO
    */
@@ -1375,6 +1490,11 @@ body {
     }
 }
 
+@media (max-width: 991px) {
+    .header .logo-text {
+      color: var(--rich-black-fogra-29-1);
+    }
+  }
 
 /**
  * responsive for larger than 1200px screen
@@ -1464,3 +1584,4 @@ body {
         grid-template-columns: 1fr 0.6fr 0.9fr 1fr;
     }
 }
+
