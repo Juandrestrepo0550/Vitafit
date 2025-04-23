@@ -60,6 +60,7 @@
               <li><a href="#" class="navbar-link" data-nav-link>Calculadora de macros</a></li>
                 
               {% if request.session.usuario_id %}
+              <a href="{% url 'adminpage' %}" class="navbar-link" data-nav-link>adminpage</a>
               <a href="{% url 'logout' %}" class="auth-btn logout" data-nav-link>Cerrar sesión</a>
               {% else %}
               <a href="{% url 'login' %}" class="auth-btn login" data-nav-link>Regístrate</a>
