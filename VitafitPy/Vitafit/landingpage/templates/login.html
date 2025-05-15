@@ -65,9 +65,10 @@
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-envelope'></i>
-                            <input type="email" class="form-control ms-2" placeholder="Correo electrónico" name="correo"
-                                value="{{ correo }}">
+                            <input type="email" class="form-control ms-2" placeholder="Correo electrónico" id="correo" name="correo"
+                                value="{{ correo }}">  
                         </label>
+                        <span id="correo-error" class="form-text text-danger"></span>
                     </div>
 
                     <!-- Campo para la contraseña -->
@@ -165,6 +166,33 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <script src="{% static 'js/scriptlogin.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <script>
+        document.getElementById("correo").addEventListener("blur", function() {
+            const correo = this.value.trim();
+            const errorSpan = document.getElementById("correo-error");
+
+            if (correo === "") {
+                errorSpan.textContent = "";
+                return;
+            }
+
+            fetch('/app.com/val_correo/?correo=' + encodeURIComponent(correo))
+            .then(response => response.json())
+            .then(data => {
+                if (data.existe) {
+                    errorSpan.textContent = "Este correo ya está registrado.";
+                } else {
+                    errorSpan.textContent = "";
+                }
+            })
+            .catch(() => {
+                errorSpan.textContent = "Error al validar el correo.";
+            });
+        });
+    </script>
+
+    
 
 </body>
 
