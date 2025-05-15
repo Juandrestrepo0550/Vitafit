@@ -17,17 +17,8 @@ li {
 
 body {
     font-family: 'Poppins', sans-serif;
+    background-color: #f4f9f8; /* Color claro de fondo */
 }
-
-.fondo {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                      url(../DashboardReal/img/admin.png);
-    background-size: cover;
-    background-position: center;
-    height: 100vh; /* Ajusta según tu diseño */
-    color: white; /* Asegúrate de que el texto sea visible */
-}
-
 
 .wrapper {
     display: flex;
@@ -128,8 +119,9 @@ a.sidebar-link {
 }
 
 a.sidebar-link:hover {
-    background-color: rgba(255, 255, 255, .075);
-    border-left: 3px solid #3b7ddd;
+    background-color: #96CFBE;
+    border-left: 3px solid #ffffff;
+    color: #151c23;
 }
 
 .sidebar-item {
@@ -193,15 +185,16 @@ a.sidebar-link:hover {
 }
 
 .card {
-    background-color: #f5f5f5;
-    transition: .4s;
-    cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
 }
 
 .card:hover {
     background-color: #96CFBE;
-    color: #FFF;
-    transform: translateY(-10.5px);
+    color: #fff;
+    transform: translateY(-5px);
 }
 
 .text-success {

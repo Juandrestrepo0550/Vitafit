@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,13 +8,15 @@
     <!-- Google Fonts para estilos de texto personalizados -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <!-- Iconos de Boxicons para añadir íconos -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <title>Registrate</title>
 </head>
+
 <body>
-    
+
     {% load static %}
     <!-- Contenedor principal para el formulario de registro -->
     <div class="container-form register d-flex flex-column flex-md-row align-items-stretch overflow-hidden">
@@ -36,64 +39,76 @@
                     <i class='bx bxl-linkedin mx-2'></i>
                 </div>
                 <p>o usa tu email para registrarte</p>
-                
+
                 <!-- Formulario de registro -->
-                <form action="{% url 'register' %}" class="form form-register needs-validation mx-auto w-100" style="max-width: 400px;" novalidate method="post">
+                <form action="{% url 'register' %}" class="form form-register needs-validation mx-auto w-100"
+                    style="max-width: 400px;" novalidate method="post">
                     {% csrf_token %}
 
+                    <!-- Campo para nombres -->
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-user'></i>
-                            <input type="text" class="form-control ms-2" placeholder="Nombre completo" name="nombre_completo" value="{{ nombre_completo }}">
-                        </label>
-                    </div>                    
-
-                    <!-- Campo para el nombre de usuario -->
-                    <div class="mb-3">
-                        <label class="d-flex align-items-center">
-                            <i class='bx bx-user'></i>
-                            <input type="text" class="form-control ms-2" placeholder="Nombre Usuario" name="nickname" value="{{ nickname }}">
+                            <input type="text" class="form-control ms-2" placeholder="Nombres" name="nombres"
+                                value="{{ nombres }}">
                         </label>
                     </div>
+
+                    <!-- Campo para apellidos -->
+                    <div class="mb-3">
+                        <label class="d-flex align-items-center">
+                            <i class='bx bx-user'></i>
+                            <input type="text" class="form-control ms-2" placeholder="Apellidos" name="apellidos"
+                                value="{{ apellidos }}">
+                        </label>
+                    </div>
+
                     <!-- Campo para el correo electrónico -->
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-envelope'></i>
-                            <input type="email" class="form-control ms-2" placeholder="Correo Electronico" name="correo" value="{{ correo }}">
+                            <input type="email" class="form-control ms-2" placeholder="Correo electrónico" name="correo"
+                                value="{{ correo }}">
                         </label>
                     </div>
+
                     <!-- Campo para la contraseña -->
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-lock-alt'></i>
-                            <input type="password" class="form-control ms-2" placeholder="Contraseña" name="contrasena" value="{{ contrasena }}">
+                            <input type="password" class="form-control ms-2" placeholder="Contraseña" name="contrasena"
+                                value="{{ contrasena }}">
                         </label>
                     </div>
-                    <!-- Campo para la confirmacion de contraseña -->
+
+                    <!-- Campo para la confirmación de contraseña -->
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-lock-alt'></i>
-                            <input type="password" class="form-control ms-2" placeholder="Confirma tu contraseña" name="repetircontrasena" value="{{ repetircontrasena }}">
+                            <input type="password" class="form-control ms-2" placeholder="Confirma tu contraseña"
+                                name="repetircontrasena" value="{{ repetircontrasena }}">
                         </label>
                     </div>
+
                     <!-- Botón para enviar el formulario -->
                     <input type="submit" class="btn btn-success w-100 mt-3" value="Registrarse">
+
                     {% if request.GET.registro == "ok" %}
                         {% with message="Usuario registrado correctamente" %}
                             <div class="alert alert-success">{{ message }}</div>
                         {% endwith %}
                     {% endif %}
+
                     {% if messages and form_type == "register" %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }}">{{ message }}</div>
                         {% endfor %}
                     {% endif %}
-
                 </form>
             </div>
         </div>
     </div>
-    
+
     <!-- Contenedor para el formulario de inicio de sesión -->
     <div class="container-form login hide d-flex flex-column flex-md-row align-items-stretch">
         <!-- Sección informativa de bienvenida -->
@@ -116,40 +131,44 @@
                 </div>
                 <p>o Iniciar Sesión con una cuenta</p>
                 <!-- Formulario de inicio de sesión -->
-                <form class="form form-login needs-validation" novalidate method='post' action="{% url 'inicio_sesion' %}">
+                <form class="form form-login needs-validation" novalidate method='post'
+                    action="{% url 'inicio_sesion' %}">
                     {% csrf_token %}
                     <!-- Campo para el correo electrónico -->
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-envelope'></i>
-                            <input type="email" class="form-control ms-2" placeholder="Correo Electronico" name="correo" required>
+                            <input type="email" class="form-control ms-2" placeholder="Correo Electronico" name="correo"
+                                required>
                         </label>
                     </div>
                     <!-- Campo para la contraseña -->
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-lock-alt'></i>
-                            <input type="password" class="form-control ms-2" placeholder="Contraseña" name="contrasena" required>
+                            <input type="password" class="form-control ms-2" placeholder="Contraseña" name="contrasena"
+                                required>
                         </label>
                     </div>
                     <!-- Botón para iniciar sesión -->
                     <input type="submit" class="btn btn-success w-100 mt-3" value="Iniciar Sesión">
                     {% if messages and form_type == "login" %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                        {% endfor %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
                     {% endif %}
                 </form>
             </div>
         </div>
     </div>
 
-    
+
 
     <link rel="stylesheet" href="{% static 'css/estiloslogin.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <script src="{% static 'js/scriptlogin.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    
+
 </body>
+
 </html>

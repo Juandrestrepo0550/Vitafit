@@ -13,12 +13,9 @@ class Usuarios(models.Model):
     nombres = models.CharField(max_length=128)
     apellidos = models.CharField(max_length=128)
     correo = models.CharField(max_length=200)
-    nickname = models.CharField(max_length=20)
-    edad = models.DateField(db_column='Edad')  # Field name made lowercase.
-    peso = models.DecimalField(max_digits=5, decimal_places=2)
-    altura = models.DecimalField(max_digits=5, decimal_places=2)
     contrasena = models.CharField(max_length=128)
     rol = models.CharField(max_length=13)
+    foto_perfil = models.CharField(max_length=255, blank=True, null=True)
     fecha_registro = models.DateTimeField(blank=True, null=True)
     fecha_modificacion = models.DateTimeField(blank=True, null=True)
     recuperarcontrasena = models.CharField(max_length=128, blank=True, null=True)
