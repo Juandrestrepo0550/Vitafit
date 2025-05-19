@@ -92,4 +92,7 @@ def cerrar_sesion(request):
 def adminpage(request):
     return render(request, 'dashboard.html')
 
+def rutines(request):
+    return render(request, 'rutinas.html')
+
 
