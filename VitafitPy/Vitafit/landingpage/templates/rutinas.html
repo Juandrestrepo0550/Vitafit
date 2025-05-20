@@ -7,20 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
-    <title>VitaFIT - Inicio</title>
+    <title>VitaFIT - Rutinas</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
 
     <!-- custom css link -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styleRutines.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
     <!-- google font link -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap" rel="stylesheet">
 
+ 
 
 
 </head>
@@ -79,25 +82,226 @@
         </div>
     </header>
 
-    <main>
-
-             <section class="section hero bg-dark has-after has-bg-image" id="home" aria-label="hero" data-section style="background-image: url('{% static 'img/hero-bg.png' %}')">
-                <div styl class="container">
-                    
-
-
-                    <div class="hero-banner">
-                        <img src="{% static 'img/hero-banner.png' %}" width="660" height="753" alt="hero banner" class="w-100">
-                        <img src="{% static 'img/hero-circle-one.png' %}" width="666" height="666" aria-hidden="true" alt="" class="circle circle-1">
-                        <img src="{% static 'img/hero-circle-two.png' %}" width="666" height="666" aria-hidden="true" alt="" class="circle circle-2">
-                        <img src="{% static 'img/heart-rate.svg' %}" width="255" height="270" alt="heart rate" class="abs-img abs-img-1">
-                        <img src="{% static 'img/calories.svg' %}" width="348" height="224" alt="calories" class="abs-img abs-img-2">
+    <article>
+            <!-- HERO RUTINAS -->
+            <section  class="hero-rutinas"  > 
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <h1 class="display-4 fw-bold mb-4">Transforma tu cuerpo, transforma tu vida</h1>
+                            <p class="lead mb-5">Descubre rutinas diseñadas por expertos para ayudarte a alcanzar tus metas fitness, sin importar tu nivel de experiencia.</p>
+                            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                                <a href="#rutinas" id="boton" class="btn btn-primary btn-lg px-4 gap-3">Explora Rutinas</a>
+                                <a href="#testimonios" class="btn btn-outline-light btn-lg px-4">Historias de éxito</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
- 
 
-              
+            <!-- SECCIÓN DE RUTINAS -->
+            <section id="rutinas" class="py-5">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="h1 section-title">Nuestras Rutinas</h2>
+                        <p class="lead">Selecciona la rutina que mejor se adapte a tus objetivos</p>
+                    </div>
+
+                    <div class="row g-4">
+                        <!-- Rutina 1 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-cardio.jpg' %}" class="rutina-img" alt="Rutina de Cardio">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-baja">Principiante</span>
+                                    <h3 class="h4 mt-2">Cardio para Iniciantes</h3>
+                                    <p class="text-muted">Perfecta para empezar a mejorar tu resistencia cardiovascular sin sobrecargar tu cuerpo.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="badge bg-light text-dark">30-45 min</span>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rutina 2 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-fuerza.jpg' %}" class="rutina-img" alt="Rutina de Fuerza">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-media">Intermedio</span>
+                                    <h3 class="h4 mt-2">Entrenamiento de Fuerza</h3>
+                                    <p class="text-muted">Desarrolla músculo y aumenta tu metabolismo con esta rutina completa de fuerza.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="badge bg-light text-dark">45-60 min</span>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rutina 3 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-hiit.jpg' %}" class="rutina-img" alt="Rutina HIIT">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-alta">Avanzado</span>
+                                    <h3 class="h4 mt-2">HIIT Quemagrasa</h3>
+                                    <p class="text-muted">Maximiza la quema de calorías en menos tiempo con este entrenamiento de alta intensidad.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="badge bg-light text-dark">20-30 min</span>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rutina 4 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-yoga.jpg' %}" class="rutina-img" alt="Rutina de Yoga">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-baja">Principiante</span>
+                                    <h3 class="h4 mt-2">Yoga para Todos</h3>
+                                    <p class="text-muted">Mejora tu flexibilidad, postura y reduce el estrés con esta rutina de yoga accesible.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="badge bg-light text-dark">45-60 min</span>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rutina 5 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-piernas.jpg' %}" class="rutina-img" alt="Rutina de Piernas">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-media">Intermedio</span>
+                                    <h3 class="h4 mt-2">Desafío de Piernas</h3>
+                                    <p class="text-muted">Fortalece y tonifica tus piernas con esta rutina intensa pero efectiva.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="badge bg-light text-dark">40-50 min</span>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rutina 6 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-completa.jpg' %}" class="rutina-img" alt="Rutina Completa">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-alta">Avanzado</span>
+                                    <h3 class="h4 mt-2">Full Body Challenge</h3>
+                                    <p class="text-muted">Reto completo que trabaja todos los grupos musculares en una sola sesión intensa.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="badge bg-light text-dark">60-75 min</span>
+                                        <a href="#" class="btn btn-sm btn-outline-primary">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN DE MOTIVACIÓN -->
+            <section id="testimonios" class="motivacion-section">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="h1 text-white">Historias que Inspiran</h2>
+                        <p class="lead text-white-50">Descubre cómo nuestros miembros transformaron sus vidas</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="testimonial-card">
+                                <div class="emoji-rating">💪🔥😊</div>
+                                <p class="mb-3">"Gracias a las rutinas de VitaFIT, perdí 15kg y gané una confianza que nunca tuve. Ahora me siento capaz de cualquier cosa!"</p>
+                                <div class="d-flex align-items-center">
+                                    <img src="{% static 'img/testimonio1.jpg' %}" class="rounded-circle me-3" width="50" height="50" alt="Cliente satisfecho">
+                                    <div>
+                                        <h5 class="mb-0">Carlos M.</h5>
+                                        <small>6 meses en VitaFIT</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="testimonial-card">
+                                <div class="emoji-rating">🏃‍♀️✨❤️</div>
+                                <p class="mb-3">"Empecé con las rutinas para principiantes y ahora corro medio maratones. Nunca pensé que podría llegar tan lejos!"</p>
+                                <div class="d-flex align-items-center">
+                                    <img src="{% static 'img/testimonio2.jpg' %}" class="rounded-circle me-3" width="50" height="50" alt="Cliente satisfecho">
+                                    <div>
+                                        <h5 class="mb-0">Ana L.</h5>
+                                        <small>8 meses en VitaFIT</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="testimonial-card">
+                                <div class="emoji-rating">🧘‍♂️🌿👍</div>
+                                <p class="mb-3">"Las rutinas de yoga cambiaron mi vida. No solo mejoró mi flexibilidad, sino que también redujo mi ansiedad significativamente."</p>
+                                <div class="d-flex align-items-center">
+                                    <img src="{% static 'img/testimonio3.jpg' %}" class="rounded-circle me-3" width="50" height="50" alt="Cliente satisfecho">
+                                    <div>
+                                        <h5 class="mb-0">David R.</h5>
+                                        <small>4 meses en VitaFIT</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <a href="#" class="btn btn-light btn-lg">Únete a nuestra comunidad</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN DE BENEFICIOS -->
+            <section class="py-5 bg-light">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <img src="{% static 'img/beneficios-rutinas.jpg' %}" class="img-fluid rounded shadow" alt="Beneficios de seguir rutinas">
+                        </div>
+                        <div class="col-lg-6 mt-4 mt-lg-0">
+                            <h2 class="h1 mb-4">¿Por qué seguir una rutina?</h2>
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex align-items-start">
+                                    <span class="me-3 text-primary">✓</span>
+                                    <span><strong>Resultados consistentes:</strong> Las rutinas están diseñadas para progresar semana a semana.</span>
+                                </li>
+                                <li class="mb-3 d-flex align-items-start">
+                                    <span class="me-3 text-primary">✓</span>
+                                    <span><strong>Evita lesiones:</strong> Movimientos bien estructurados para proteger tu cuerpo.</span>
+                                </li>
+                                <li class="mb-3 d-flex align-items-start">
+                                    <span class="me-3 text-primary">✓</span>
+                                    <span><strong>Ahorra tiempo:</strong> No pierdes minutos decidiendo qué hacer en el gimnasio.</span>
+                                </li>
+                                <li class="mb-3 d-flex align-items-start">
+                                    <span class="me-3 text-primary">✓</span>
+                                    <span><strong>Motivación constante:</strong> Ver tu progreso te mantendrá enfocado en tus metas.</span>
+                                </li>
+                                <li class="mb-3 d-flex align-items-start">
+                                    <span class="me-3 text-primary">✓</span>
+                                    <span><strong>Adaptabilidad:</strong> Puedes modificar las rutinas según tu disponibilidad y equipo.</span>
+                                </li>
+                            </ul>
+                            <a href="#" class="btn btn-primary mt-3">Empieza hoy mismo</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </article>
     </main>
     
 
