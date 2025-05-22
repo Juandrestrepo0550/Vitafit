@@ -55,7 +55,7 @@
             <ul class="navbar-list">
               <li><a href="#home" class="navbar-link active" data-nav-link>Inicio</a></li>
               <li><a href="#about" class="navbar-link" data-nav-link>Sobre nosotros</a></li>
-              <li><a href="#class" class="navbar-link" data-nav-link>Rutinas</a></li>
+              <li><a href="{% url 'rutines' %}" class="navbar-link" data-nav-link>Rutinas</a></li>
               <li><a href="#blog" class="navbar-link" data-nav-link>Plan nutricional</a></li>
               <li><a href="#" class="navbar-link" data-nav-link>Calculadora de macros</a></li>
                 
@@ -90,6 +90,7 @@
             <!-- HERO SECTION -->
             <section class="section hero bg-dark has-after has-bg-image" id="home" aria-label="hero" data-section style="background-image: url('{% static 'img/hero-bg.png' %}')">
                 <div class="container">
+                    
                     <div class="hero-content">
                         <p class="hero-subtitle">
                             <strong class="strong">El mejor</strong>Club Fitness
@@ -98,8 +99,9 @@
                         <p class="section-text">
                             Duis mollis felis quis libero dictum vehicula. Duis dictum lorem mi, a faucibus nisi eleifend eu.
                         </p>
-                        <a href="#" class="btn btn-primary">Empieza ahora</a>
+                        <a href="#" class="auth-btn login">Empieza ahora</a>
                     </div>
+                    
 
                     <div class="hero-banner">
                         <img src="{% static 'img/hero-banner.png' %}" width="660" height="753" alt="hero banner" class="w-100">
@@ -141,7 +143,7 @@
                                     <p class="coach-title">Compañia de software</p>
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-primary">Más información</a>
+                            <a href="#" class="auth-btn login">Más información</a>
                         </div>
                     </div>
                 </div>

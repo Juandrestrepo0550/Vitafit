@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <title>VitaFIT - Rutinas</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+
+    <!-- custom css link -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styleRutines.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- google font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap" rel="stylesheet">
+
+ 
+
+
+</head>
+
+<div class="custom-styles">
+    <!-- Todo tu contenido -->
+
+<body id="top">
+    
+    <!-- HEADER -->
+    <header class="header" data-header>
+        <div class="container">
+      
+            <a href="#" class="logo" style="display: flex; align-items: center; gap: 8px;">
+                <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" alt="Logo VitaFIT" style="height: 50px;">
+                <span class="logo-text">VitaFIT</span>
+              </a>
+      
+
+         
+          <nav class="navbar" data-navbar>
+            <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+              <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
+            </button>
+      
+            <ul class="navbar-list">
+              <li><a href="{% url 'index' %}" class="navbar-link " data-nav-link>Inicio</a></li>
+              <li><a href="#about" class="navbar-link" data-nav-link>Sobre nosotros</a></li>
+              <li><a href="#class" class="navbar-link active" data-nav-link>Rutinas</a></li>
+              <li><a href="#blog" class="navbar-link" data-nav-link>Plan nutricional</a></li>
+              <li><a href="#" class="navbar-link" data-nav-link>Calculadora de macros</a></li>
+                
+                {% if request.session.usuario_id %}
+                    {% if request.session.rol == 'admin' %}
+                        <a href="{% url 'adminpage' %}" class="navbar-link" data-nav-link>adminpage</a>
+                    {% endif %}
+                    <a href="{% url 'logout' %}" class="auth-btn logout" data-nav-link>Cerrar sesión</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="auth-btn login" data-nav-link>Regístrate</a>
+                {% endif %}
+              
+            </ul>
+        </nav>
+          
+      
+
+
+      
+      
+          <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+          </button>
+      
+        </div>
+    </header>
+
+    <article>
+            <!-- HERO RUTINAS -->
+            <section  class="hero-rutinas"  > 
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-lg mb-6">Transforma tu cuerpo, transforma tu vida</h1>
+                            <p class="text-lg md:text-xl text-white/90 font-medium max-w-2xl mx-auto drop-shadow-sm">Descubre rutinas diseñadas por expertos para ayudarte a alcanzar tus metas fitness, sin importar tu nivel de experiencia.</p>
+                            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
+                            <a href="#rutinas" class="transition transform hover:-translate-y-1 hover:shadow-lg bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full text-lg shadow-md">
+                                🏋️ Explora Rutinas
+                            </a>
+                            <a href="#testimonios" class="transition transform hover:-translate-y-1 hover:shadow-lg border-2 border-white text-white hover:bg-white hover:text-green-600 font-semibold py-3 px-6 rounded-full text-lg shadow-md">
+                                💬 Historias de Éxito
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN DE RUTINAS -->
+            <section id="rutinas" class="py-5">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="text-4xl md:text-6xl font-extrabold  leading-tight drop-shadow-lg mb-6">Nuestras Rutinas</h2>
+                        <p class="lead">Selecciona la rutina que mejor se adapte a tus objetivos</p>
+                    </div>
+
+                    <div class="row g-4">
+                        <!-- Rutina 1 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-cardio.jpg' %}" class="rutina-img" alt="Rutina de Cardio">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-baja">Principiante</span>
+                                    <h3 class="h4 mt-2">Cardio para Iniciantes</h3>
+                                    <p class="text-muted">Perfecta para empezar a mejorar tu resistencia cardiovascular sin sobrecargarte.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="text-sm font-medium bg-gray-100 text-gray-800 px-3 py-1 rounded-full">30-45 min</span>
+                                        <a href="#" class="text-green-600 font-medium hover:underline">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rutina 2 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-fuerza.jpg' %}" class="rutina-img" alt="Rutina de Fuerza">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-media">Intermedio</span>
+                                    <h3 class="h4 mt-2">Entrenamiento de Fuerza</h3>
+                                    <p class="text-muted">Desarrolla músculo y aumenta tu metabolismo con esta rutina completa de fuerza.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="text-sm font-medium bg-gray-100 text-gray-800 px-3 py-1 rounded-full">30-45 min</span>
+                                    <a href="#" class="text-green-600 font-medium hover:underline">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rutina 3 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-hiit.jpg' %}" class="rutina-img" alt="Rutina HIIT">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-alta">Avanzado</span>
+                                    <h3 class="h4 mt-2">HIIT Quemagrasa</h3>
+                                    <p class="text-muted">Maximiza la quema de calorías en menos tiempo con este entrenamiento de alta intensidad.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="text-sm font-medium bg-gray-100 text-gray-800 px-3 py-1 rounded-full">30-45 min</span>
+                                    <a href="#" class="text-green-600 font-medium hover:underline">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rutina 4 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-yoga.jpg' %}" class="rutina-img" alt="Rutina de Yoga">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-baja">Principiante</span>
+                                    <h3 class="h4 mt-2">Yoga para Todos</h3>
+                                    <p class="text-muted">Mejora tu flexibilidad, postura y reduce el estrés con esta rutina de yoga accesible.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="text-sm font-medium bg-gray-100 text-gray-800 px-3 py-1 rounded-full">30-45 min</span>
+                                    <a href="#" class="text-green-600 font-medium hover:underline">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rutina 5 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-piernas.jpg' %}" class="rutina-img" alt="Rutina de Piernas">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-media">Intermedio</span>
+                                    <h3 class="h4 mt-2">Desafío de Piernas</h3>
+                                    <p class="text-muted">Fortalece y tonifica tus piernas con esta rutina intensa pero efectiva.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="text-sm font-medium bg-gray-100 text-gray-800 px-3 py-1 rounded-full">30-45 min</span>
+                                    <a href="#" class="text-green-600 font-medium hover:underline">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rutina 6 -->
+                        <div class="col-md-6 col-lg-4">
+                            <div class="rutina-card">
+                                <img src="{% static 'img/rutina-completa.jpg' %}" class="rutina-img" alt="Rutina Completa">
+                                <div class="p-4">
+                                    <span class="rutina-dificultad dificultad-alta">Avanzado</span>
+                                    <h3 class="h4 mt-2">Full Body Challenge</h3>
+                                    <p class="text-muted">Reto completo que trabaja todos los grupos musculares en una sola sesión intensa.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span class="text-sm font-medium bg-gray-100 text-gray-800 px-3 py-1 rounded-full">30-45 min</span>
+                                    <a href="#" class="text-green-600 font-medium hover:underline">Ver detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN DE MOTIVACIÓN -->
+            <section id="testimonios" class="motivacion-section">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-lg mb-6">Historias que Inspiran</h2>
+                        <p class="lead text-white-50">Descubre cómo nuestros miembros transformaron sus vidas</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="testimonial-card">
+                                <div class="emoji-rating">💪🔥😊</div>
+                                <p class="mb-3">"Gracias a las rutinas de VitaFIT, perdí 15kg y gané una confianza que nunca tuve. Ahora me siento capaz de cualquier cosa!"</p>
+                                <div class="d-flex align-items-center">
+                                    <img src="{% static 'img/testimonio1.png' %}" class="rounded-circle me-3" width="50" height="50" alt="Cliente satisfecho">
+                                    <div>
+                                        <h5 class="mb-0">Carlos M.</h5>
+                                        <small>6 meses en VitaFIT</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="testimonial-card">
+                                <div class="emoji-rating">🏃‍♀️✨❤️</div>
+                                <p class="mb-3">"Empecé con las rutinas para principiantes y ahora corro medio maratones. Nunca pensé que podría llegar tan lejos!"</p>
+                                <div class="d-flex align-items-center">
+                                    <img src="{% static 'img/testimonio1.png' %}" class="rounded-circle me-3" width="50" height="50" alt="Cliente satisfecho">
+                                    <div>
+                                        <h5 class="mb-0">Ana L.</h5>
+                                        <small>8 meses en VitaFIT</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="testimonial-card">
+                                <div class="emoji-rating">🧘‍♂️🌿👍</div>
+                                <p class="mb-3">"Las rutinas de yoga cambiaron mi vida. No solo mejoró mi flexibilidad, sino que también redujo mi ansiedad significativamente."</p>
+                                <div class="d-flex align-items-center">
+                                    <img src="{% static 'img/testimonio1.png' %}" class="rounded-circle me-3" width="50" height="50" alt="Cliente satisfecho">
+                                    <div>
+                                        <h5 class="mb-0">David R.</h5>
+                                        <small>4 meses en VitaFIT</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-10">
+                    <a href="#"
+                        class="inline-block bg-white text-purple-700 font-bold text-lg px-6 py-3 rounded-full shadow-lg transition hover:bg-purple-100 hover:scale-105 hover:shadow-xl duration-300">
+                        🚀 Únete a nuestra comunidad
+                    </a>
+                    </div>
+                </div>
+            </section>
+
+<!-- SECCIÓN DE BENEFICIOS -->
+<section class="py-5 bg-gray-100">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col lg:flex-row items-center">
+      
+      <div class="lg:w-1/2 mb-8 lg:mb-0">
+        <img src="{% static 'img/beneficios-rutinas.png' %}" alt="Beneficios de seguir rutinas" class="rounded-lg shadow-lg w-full h-auto">
+      </div>
+
+      <div class="lg:w-1/2 lg:pl-12">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">¿Por qué seguir una rutina?</h2>
+        <p class="text-lg text-gray-600 mb-6">Porque transformar tu cuerpo también transforma tu vida. En VitaFIT, cada rutina está diseñada para impulsarte física y mentalmente.</p>
+        
+        <ul class="space-y-4 text-base text-gray-700">
+          <li class="flex items-start"><span class="text-green-500 text-xl mr-3">✔</span> <span><strong>Resultados constantes:</strong> Rutinas planeadas para progresar semana a semana.</span></li>
+          <li class="flex items-start"><span class="text-green-500 text-xl mr-3">✔</span> <span><strong>Prevención de lesiones:</strong> Ejercicios estructurados para proteger tu cuerpo.</span></li>
+          <li class="flex items-start"><span class="text-green-500 text-xl mr-3">✔</span> <span><strong>Optimiza tu tiempo:</strong> Entrena sin perder minutos en dudas.</span></li>
+          <li class="flex items-start"><span class="text-green-500 text-xl mr-3">✔</span> <span><strong>Motivación real:</strong> Ver tu avance es combustible para tu constancia.</span></li>
+          <li class="flex items-start"><span class="text-green-500 text-xl mr-3">✔</span> <span><strong>Flexibilidad total:</strong> Ajusta tu rutina a tu tiempo y entorno.</span></li>
+        </ul>
+        <br><br>
+        <a href="#"
+        class="inline-block bg-green-500 text-white font-bold text-lg px-6 py-3 rounded-full shadow-lg transition duration-300 hover:bg-green-600 hover:scale-105 hover:shadow-xl">
+        ✨ Empieza tu cambio ahora
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+        </article>
+    </main>
+    
+
+<!-- FOOTER -->
+    <footer class="footer">
+        <div class="section footer-top bg-dark has-bg-image" style="background-image: url('{% static 'img/footer-bg.png' %}')">
+            <div class="container">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" width="65" height="65" loading="lazy" alt="Trainer">
+                        <span class="span">VitaFIT</span>
+                    </a>
+                    <p class="footer-brand-text">
+                        Etiam suscipit fringilla ullamcorper sed malesuada urna nec odio.
+                    </p>
+                </div>
+
+                <ul class="footer-list">
+                    <li>
+                        <p class="footer-list-title has-before">Nuestros links</p>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-link">Inicio</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-link">Sobre nosotros</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-link">Más informacón</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-link">Blog</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-link">Contactanos</a>
+                    </li>
+                </ul>
+
+                <ul class="footer-list">
+                    <li>
+                        <p class="footer-list-title has-before">Contactanos</p>
+                    </li>
+                    <li class="footer-list-item">
+                        <div class="icon">
+                            <ion-icon name="location" aria-hidden="true"></ion-icon>
+                        </div>
+                        <address class="address footer-link">
+                            Medellín, Colombia
+                        </address>
+                    </li>
+                    <li class="footer-list-item">
+                        <div class="icon">
+                            <ion-icon name="call" aria-hidden="true"></ion-icon>
+                        </div>
+                        <div>
+                            <a href="tel:3154998640" class="footer-link">3154998640</a>
+                            <a href="tel:+573154998640" class="footer-link">+573154998640</a>
+                        </div>
+                    </li>
+                    <li class="footer-list-item">
+                        <div class="icon">
+                            <ion-icon name="mail" aria-hidden="true"></ion-icon>
+                        </div>
+                        <div>
+                            <a href="mailto:info@fitlife.com" class="footer-link">info@VitaFIT.com</a>
+                            <a href="mailto:services@fitlife.com" class="footer-link">Servicios@VitaFIT.com</a>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="footer-list">
+                    <li>
+                        <p class="footer-list-title has-before">Hoja informativa</p>
+                    </li>
+                    <li>
+                        <form action="" class="footer-form">
+                            <input type="email" name="email_address" aria-label="email" placeholder="Correo electronico" required class="input-field">
+                            <button type="submit" class="btn btn-primary" aria-label="Submit">
+                                <ion-icon name="chevron-forward-sharp" aria-hidden="true"></ion-icon>
+                            </button>
+                        </form>
+                    </li>
+                    <li>
+                        <ul class="social-list">
+                            <li>
+                                <a href="#" class="social-link">
+                                    <ion-icon name="logo-facebook"></ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="social-link">
+                                    <ion-icon name="logo-instagram"></ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="social-link">
+                                    <ion-icon name="logo-twitter"></ion-icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright">
+                    &copy; 2025 VitaFIT. All Rights Reserved .
+                </p>
+                <ul class="footer-bottom-list">
+                    <li>
+                        <a href="#" class="footer-bottom-link has-before">Politcas de privacidad</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-bottom-link has-before">Terminos y condiciones</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+        <ion-icon name="caret-up-sharp" aria-hidden="true"></ion-icon>
+    </a>
+</div>
+
+
+
+    <script src="{% static 'js/script.js' %}" defer></script>
+<script src="{% static 'js/bootstrap.min.js' %}" defer></script>
+
+<!-- ionicon link -->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+</body>
+</html>

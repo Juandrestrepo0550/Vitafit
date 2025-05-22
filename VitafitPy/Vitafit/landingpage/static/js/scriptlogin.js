@@ -49,3 +49,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+// Validación de formularios
+
+document.getElementById("correo").addEventListener("blur", function() {
+    const correo = this.value.trim();
+    const errorSpan = document.getElementById("correo-error");
+    if (correo === "") {
+        errorSpan.textContent = "";
+        return;
+    }
+
+    fetch('/app.com/val_correo/?correo=' + encodeURIComponent(correo))
+    .then(response => response.json())
+    .then(data => {
+        if (data.existe) {
+            errorSpan.textContent = "Este correo ya está registrado.";
+        } else {
+            errorSpan.textContent = "";
+        }
+    })
+    .catch(() => {
+        errorSpan.textContent = "Error al validar el correo.";
+    });
+});
+

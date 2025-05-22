@@ -5,6 +5,7 @@ from django.utils import timezone
 from .models import Usuarios
 from django.contrib.auth.hashers import check_password
 from django.urls import reverse
+from django.http import JsonResponse
 
 
 def index(request):
@@ -29,10 +30,6 @@ def register(request):
             messages.error(request, "Las contraseñas no coinciden.")
             return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'register'})
 
-        if Usuarios.objects.filter(correo=correo).exists():
-            messages.error(request, "El correo ya está registrado.")
-            return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'register'})
-
         usuario = Usuarios(
             nombres=nombres,
             apellidos=apellidos,
@@ -48,7 +45,12 @@ def register(request):
         messages.success(request, "Usuario registrado correctamente.")
         return redirect(f"{reverse('login')}?registro=ok")
 
-    return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'register'})
+    return render(request, 'login.html', {'form_type': 'register'})
+
+def val_correo(request):
+    correo = request.GET.get('correo', '').strip()
+    existe = Usuarios.objects.filter(correo=correo).exists()
+    return JsonResponse({'existe': existe})
 
 def inicio_sesion(request):
     if request.method == 'POST':
@@ -89,5 +91,8 @@ def cerrar_sesion(request):
 
 def adminpage(request):
     return render(request, 'dashboard.html')
+
+def rutines(request):
+    return render(request, 'rutinas.html')
 
 
