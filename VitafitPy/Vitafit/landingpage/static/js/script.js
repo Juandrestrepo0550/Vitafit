@@ -1,6 +1,25 @@
 'use strict';
 
 
+  function toggleUserMenu() {
+    const menu = document.getElementById('userMenu');
+    menu.classList.toggle('hidden');
+  }
+
+  // Cierra el menú si se hace clic fuera
+  document.addEventListener('click', function (event) {
+    const button = event.target.closest('button');
+    const menu = document.getElementById('userMenu');
+
+    if (!button || !button.contains(event.target)) {
+      if (!menu.contains(event.target)) {
+        menu.classList.add('hidden');
+      }
+    }
+  });
+
+
+
 /**
  * add event on element
  */
