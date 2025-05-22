@@ -15,10 +15,19 @@
             font-weight: 300;
 
         }
+
+        .hero-rutinas a {
+  transition: all 0.3s ease-in-out;
+}
+
+.hero-rutinas a:hover {
+  transform: scale(1.05);
+}
             
 
         #boton{
             background-color:rgb(3, 195, 7);
+            transition: transform 0.3s ease;
             
         }
         
@@ -78,7 +87,7 @@
         }
         
         .motivacion-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #003835 0%, #2dc910 100%);
             color: white;
             padding: 5rem 0;
             margin: 5rem 0;
@@ -109,3 +118,47 @@
             font-size: 1.5rem;
             margin-bottom: 1rem;
         }
+
+        /* Títulos impactantes */
+.section-title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  font-family: 'Rubik', sans-serif;
+  color: #1a202c;
+}
+
+/* Botón animado */
+.btn-primary {
+  background-color: rgb(3, 195, 7);
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 15px rgba(3, 195, 7, 0.3);
+}
+
+
+/* Responsive Hero Section */
+@media (max-width: 768px) {
+  .hero-rutinas {
+    height: auto;
+    padding: 6rem 1rem;
+    text-align: center;
+  }
+
+  .hero-rutinas h1 {
+    font-size: 2rem;
+  }
+
+  .hero-rutinas p {
+    font-size: 1rem;
+  }
+}
+
+/* Responsive Rutina Card */
+@media (max-width: 768px) {
+  .rutina-card .rutina-img {
+    height: 200px;
+  }
+}
