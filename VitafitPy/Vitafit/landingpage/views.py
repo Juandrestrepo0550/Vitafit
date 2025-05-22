@@ -46,7 +46,7 @@ def register(request):
         usuario.save()
 
         messages.success(request, "Usuario registrado correctamente.")
-        return redirect(f"{reverse('inicio_sesion')}?registro=ok")
+        return redirect(f"{reverse('login')}?registro=ok")
 
     return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'register'})
 

@@ -34,7 +34,9 @@
                 <h2>Crear una Cuenta</h2>
                 <!-- Íconos sociales para registro -->
                 <div class="icons d-flex justify-content-center my-3">
-                    <i class='bx bxl-google mx-2'></i>
+                    <a href="{% url 'social:begin' 'google-oauth2' %}">
+                        <i class='bx bxl-google mx-2'></i>
+                    </a>
                     <i class='bx bxl-github mx-2'></i>
                     <i class='bx bxl-linkedin mx-2'></i>
                 </div>
