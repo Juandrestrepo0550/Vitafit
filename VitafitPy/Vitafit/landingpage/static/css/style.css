@@ -300,7 +300,7 @@ body {
 }
 
 .section-subtitle {
-    background-color: var(--coquelicot_10);
+    background-color: #151c23d1;
     color: var(--coquelicot);
     padding: 8px 20px;
     border-radius: var(--radius-8);

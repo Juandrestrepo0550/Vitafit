@@ -56,14 +56,21 @@
               <li><a href="#blog" class="navbar-link" data-nav-link>Plan nutricional</a></li>
               <li><a href="#" class="navbar-link" data-nav-link>Calculadora de macros</a></li>
                 
-                {% if request.session.usuario_id %}
-                    {% if request.session.rol == 'admin' %}
-                        <a href="{% url 'adminpage' %}" class="navbar-link" data-nav-link>adminpage</a>
-                    {% endif %}
-                    <a href="{% url 'logout' %}" class="auth-btn logout" data-nav-link>Cerrar sesión</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="auth-btn login" data-nav-link>Regístrate</a>
-                {% endif %}
+            {% if request.session.usuario_id %}
+            <div class="flex items-center gap-5 ml-4">
+            <!-- Ícono de usuario -->
+            <a href="{% url 'adminpage' %}" class="text-gray-700 hover:text-green-600 text-5xl">
+            <ion-icon name="person-circle-outline"></ion-icon>
+            </a>
+
+            <!-- Ícono de cerrar sesión -->
+            <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-800 text-5xl">
+            <ion-icon name="log-out-outline"></ion-icon>
+            </a>
+            </div>
+            {% else %}
+            <a href="{% url 'login' %}" class="auth-btn login" data-nav-link>Regístrate</a>
+            {% endif %}
               
             </ul>
         </nav>

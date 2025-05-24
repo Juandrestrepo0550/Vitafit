@@ -80,10 +80,11 @@
                     <div class="mb-3">
                         <label class="d-flex align-items-center">
                             <i class='bx bx-lock-alt'></i>
-                            <input type="password" class="form-control ms-2" placeholder="Contraseña" name="contrasena"
-                                value="{{ contrasena }}">
+                            <input type="password" class="form-control ms-2" placeholder="Contraseña" name="contrasena" id="contrasena">
+                            <span id="contrasena-error" style="color:red; font-size: 14px;"></span>
                         </label>
                     </div>
+
 
                     <!-- Campo para la confirmación de contraseña -->
                     <div class="mb-3">
@@ -197,7 +198,41 @@
         });
     </script>
 
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form.form-register");
+            const contrasenaInput = document.getElementById("contrasena");
+            const errorSpan = document.getElementById("contrasena-error");
+
+            function validarContrasena(contrasena) {
+                const longitudValida = contrasena.length >= 8;
+                const mayuscula = /[A-Z]/.test(contrasena);
+                const minuscula = /[a-z]/.test(contrasena);
+                const numero = /[0-9]/.test(contrasena);
+                const simbolo = /[^A-Za-z0-9]/.test(contrasena);
+
+                return longitudValida && mayuscula && minuscula && numero && simbolo;
+            }
+
+            contrasenaInput.addEventListener("input", function () {
+                const contrasena = contrasenaInput.value;
+                if (!validarContrasena(contrasena)) {
+                    errorSpan.textContent = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.";
+                } else {
+                    errorSpan.textContent = "";
+                }
+            });
+
+            form.addEventListener("submit", function (e) {
+                const contrasena = contrasenaInput.value;
+                if (!validarContrasena(contrasena)) {
+                    e.preventDefault();  // Detiene el envío del formulario
+                    errorSpan.textContent = "La contraseña no cumple los requisitos.";
+                }
+            });
+        });
+    </script>
+
 
 </body>
 
