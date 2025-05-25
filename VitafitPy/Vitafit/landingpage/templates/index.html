@@ -64,7 +64,7 @@
               <li><a href="#" class="navbar-link" data-nav-link>Calculadora de macros</a></li>
 
 
-            {% if request.session.usuario_id %}
+            {% if request.session.usuario_id %} <!-- {% if user.is_authenticated %} este es el que deberia estar para que funcione el inicio de sesion con google, pero cuando funciona el de google no funciona el del registro manual de la app -->
             <div class="flex items-center gap-5 ml-4">
             <!-- Ícono de usuario -->
             <a href="{% url 'adminpage' %}" class="text-gray-700 hover:text-green-600 text-5xl">

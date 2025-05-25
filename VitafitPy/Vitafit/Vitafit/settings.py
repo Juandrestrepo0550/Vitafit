@@ -39,8 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'landingpage.apps.LandingpageConfig',
-    'social_django',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -48,9 +54,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'Vitafit.urls'
@@ -137,16 +143,22 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '799346263445-b96n4qdmv4bo11tti3b310q8hkj6eqfc.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+    }
+}
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = '/app.com/login/'# No selected code was provided, so I will suggest an improvement to the entire code file.
+LOGIN_REDIRECT_URL = '/app.com/index/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/app.com/login/'
+ACCOUNT_EMAIL_VERIFICATION = "optional"  # o 'none' si no quieres verificar email
+ACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Add a try-except block to handle potential database connection errors
 try:
@@ -163,14 +175,4 @@ try:
 except Exception as e:
     print(f"Error connecting to database: {e}")
 
-# Add a comment to explain the purpose of the SOCIAL_AUTH_GOOGLE_OAUTH2_KEY and SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET variables
-# Google OAuth2 credentials
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '799346263445-hdm08bjdsqof1jerdf9po5pa67u1dlpo.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
-
-# Add a comment to explain the purpose of the LOGIN_URL, LOGOUT_URL, and LOGIN_REDIRECT_URL variables
-# URLs for login, logout, and login redirect
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = '/app.com/login/'  # a dónde enviar después de iniciar sesión  # a dónde enviar después de iniciar sesión
 
