@@ -65,19 +65,21 @@
 
 
             {% if request.session.usuario_id %}
-            <div class="flex items-center gap-5 ml-4">
-            <!-- Ícono de usuario -->
-            <a href="{% url 'adminpage' %}" class="text-gray-700 hover:text-green-600 text-5xl">
-            <ion-icon name="person-circle-outline"></ion-icon>
-            </a>
+                <div class="flex items-center gap-5 ml-4">
+                    <!-- Ícono de usuario, solo para admin -->
+                    {% if request.session.rol == 'admin' %}
+                        <a href="{% url 'adminpage' %}" class="text-gray-700 hover:text-green-600 text-5xl">
+                            <ion-icon name="person-circle-outline"></ion-icon>
+                        </a>
+                    {% endif %}
 
-            <!-- Ícono de cerrar sesión -->
-            <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-800 text-5xl">
-            <ion-icon name="log-out-outline"></ion-icon>
-            </a>
-            </div>
+                    <!-- Ícono de cerrar sesión -->
+                    <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-800 text-5xl">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </a>
+                </div>
             {% else %}
-            <a href="{% url 'login' %}" class="auth-btn login" data-nav-link>Regístrate</a>
+                <a href="{% url 'login' %}" class="auth-btn login" data-nav-link>Regístrate</a>
             {% endif %}
 
 
