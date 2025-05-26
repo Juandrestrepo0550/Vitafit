@@ -64,21 +64,30 @@
               <li><a href="#" class="navbar-link" data-nav-link>Calculadora de macros</a></li>
 
 
-            {% if user.is_authenticated %}
-            <div class="flex items-center gap-5 ml-4">
-            <!-- Ícono de usuario -->
-            <a href="{% url 'adminpage' %}" class="text-gray-700 hover:text-green-600 text-5xl">
-            <ion-icon name="person-circle-outline"></ion-icon>
-            </a>
+{% if request.session.usuario_id %}
+  <div class="flex items-center gap-5 ml-4">
+    {% if request.session.rol == 'admin' %}
+      <!-- Ícono admin: muñeco con llave -->
+      <a href="{% url 'adminpage' %}" class="text-yellow-600 hover:text-yellow-800 text-4xl" title="Panel de administrador">
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-icon name="key-outline" class="text-sm -ml-2"></ion-icon>
+      </a>
+    {% else %}
+      <!-- Ícono perfil de usuario -->
+      <a href="{% url 'adminpage' %}" class="text-blue-600 hover:text-green-800 text-5xl" title="Mi perfil">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </a>
+    {% endif %}
 
-            <!-- Ícono de cerrar sesión -->
-            <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-800 text-5xl">
-            <ion-icon name="log-out-outline"></ion-icon>
-            </a>
-            </div>
-            {% else %}
-            <a href="{% url 'login' %}" class="auth-btn login" data-nav-link>Regístrate</a>
-            {% endif %}
+    <!-- Ícono cerrar sesión -->
+    <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-800 text-5xl" title="Cerrar sesión">
+      <ion-icon name="log-out-outline"></ion-icon>
+    </a>
+  </div>
+{% else %}
+  <a href="{% url 'login' %}" class="auth-btn login" data-nav-link>Regístrate</a>
+{% endif %}
+
 
 
 
