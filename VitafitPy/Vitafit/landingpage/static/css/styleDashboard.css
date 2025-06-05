@@ -173,6 +173,11 @@ a.sidebar-link:hover {
 .navbar {
     background-color: #f5f5f5;
     box-shadow: 0 0 2rem 0 rgba(33, 37, 41, .1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: white;
 }
 
 .navbar-expand .navbar-collapse {
@@ -295,4 +300,34 @@ footer .text-body-secondary {
 .card-body a p {
     font-size: 14px;
     color: #6c757d;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-name {
+    font-weight: bold;
+    color: #3b5fbf;
+    font-size: 18px;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: white;
+    margin-left: 5px;
+}
+
+.navbar-right a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 14px;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.navbar-right a:hover {
+    opacity: 0.7;
 }
