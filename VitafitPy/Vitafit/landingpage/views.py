@@ -69,7 +69,7 @@ def inicio_sesion(request):
 
         usuario = usuarios.first()
 
-<<<<<<< Updated upstream
+
         if check_password(contrasena, usuario.contrasena):
             request.session['usuario_id'] = usuario.id
             request.session['usuario_nombre'] = usuario.nombres  # Puedes concatenar con apellidos si prefieres
@@ -97,7 +97,7 @@ def rutines(request):
     return render(request, 'rutinas.html')
 
 
-=======
+
     if check_password(contrasena, usuario.contrasena):
         request.session['usuario_id'] = usuario.id
         request.session['usuario_nombre'] = usuario.nickname
@@ -106,4 +106,4 @@ def rutines(request):
     else:
         messages.error(request, "Contraseña incorrecta.")
         return render(request, 'login.html', {'form_type': 'login'})
->>>>>>> Stashed changes
+
