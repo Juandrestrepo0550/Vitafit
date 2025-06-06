@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    link rel="stylesheet" href="{% static 'css/userd.css' %}">
+
+    <title>VitaFIT - Mi Perfil</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+
+    <!-- custom css link -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- google font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body id="top" class="bg-gray-50">
+    
+    <!-- HEADER -->
+    <header class="header" data-header>
+        <div class="container">
+            <a href="#" class="logo" style="display: flex; align-items: center; gap: 8px;">
+                <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" alt="Logo VitaFIT" style="height: 50px;">
+                <span class="logo-text">VitaFIT</span>
+            </a>
+
+            <nav class="navbar" data-navbar>
+                <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                    <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
+                </button>
+
+                <ul class="navbar-list">
+                    <li><a href="{% url 'index' %}" class="navbar-link" data-nav-link>Inicio</a></li>
+                    <li><a href="#about" class="navbar-link" data-nav-link>Sobre nosotros</a></li>
+                    <li><a href="{% url 'rutinas' %}" class="navbar-link" data-nav-link>Rutinas</a></li>
+                    <li><a href="#blog" class="navbar-link" data-nav-link>Plan nutricional</a></li>
+                    <li><a href="#" class="navbar-link" data-nav-link>Calculadora de macros</a></li>
+                    
+                    {% if request.session.usuario_id %}
+                    <div class="flex items-center gap-5 ml-4">
+                        <!-- Ícono de usuario -->
+                        <a href="{% url 'adminpage' %}" class="text-gray-700 hover:text-green-600 text-5xl">
+                            <ion-icon name="person-circle-outline"></ion-icon>
+                        </a>
+
+                        <!-- Ícono de cerrar sesión -->
+                        <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-800 text-5xl">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </a>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="auth-btn login" data-nav-link>Regístrate</a>
+                    {% endif %}
+                </ul>
+            </nav>
+
+            <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- HERO USER DASHBOARD -->
+        <section class="bg-gradient-to-r from-green-500 to-green-700 rounded-xl p-8 mb-10 shadow-lg">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="text-white mb-6 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-extrabold mb-2">¡Bienvenido de vuelta!</h1>
+                    <p class="text-xl opacity-90">Aquí puedes gestionar tu progreso y configurar tu experiencia VitaFIT</p>
+                </div>
+                <div class="flex items-center">
+                    <div class="relative">
+                        <img src="{% static 'img/user-avatar.png' %}" alt="Foto de perfil" class="w-24 h-24 rounded-full border-4 border-white shadow-lg">
+                        <span class="absolute bottom-0 right-0 bg-green-400 text-white rounded-full p-1">
+                            <ion-icon name="camera" class="text-xl"></ion-icon>
+                        </span>
+                    </div>
+                    <div class="ml-4 text-white">
+                        <h2 class="text-2xl font-bold">{{ usuario.nombre }}</h2>
+                        <p class="text-sm opacity-80">Miembro desde {{ usuario.fecha_registro }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- COLUMNA IZQUIERDA - ESTADÍSTICAS -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- PROGRESO SEMANAL -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Tu Progreso Semanal</h2>
+                        <select class="bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option>Esta semana</option>
+                            <option>Últimas 2 semanas</option>
+                            <option>Último mes</option>
+                        </select>
+                    </div>
+                    <div class="h-64">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- RUTINA ACTUAL -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Tu Rutina Actual</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 rounded-lg p-5 border-l-4 border-green-500">
+                            <div class="flex items-center mb-3">
+                                <div class="bg-green-100 p-3 rounded-full mr-4">
+                                    <ion-icon name="barbell-outline" class="text-green-600 text-xl"></ion-icon>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Entrenamiento de Fuerza</h3>
+                                    <p class="text-sm text-gray-600">Nivel: Intermedio</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-600 mb-3">
+                                <span>Progreso: 65%</span>
+                                <span>Día 4/7</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-600 h-2.5 rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-lg p-5 border-l-4 border-blue-500">
+                            <div class="flex items-center mb-3">
+                                <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                    <ion-icon name="nutrition-outline" class="text-blue-600 text-xl"></ion-icon>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Plan Nutricional</h3>
+                                    <p class="text-sm text-gray-600">Definición muscular</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-600 mb-3">
+                                <span>Progreso: 42%</span>
+                                <span>Semana 2/4</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 42%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <a href="#" class="inline-flex items-center text-green-600 font-medium hover:text-green-800">
+                            Ver detalles completos
+                            <ion-icon name="chevron-forward-outline" class="ml-1"></ion-icon>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- LOGROS -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Tus Logros</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center p-4">
+                            <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <ion-icon name="trophy-outline" class="text-yellow-600 text-2xl"></ion-icon>
+                            </div>
+                            <h3 class="font-bold">Principiante</h3>
+                            <p class="text-sm text-gray-600">Primera semana</p>
+                        </div>
+                        <div class="text-center p-4">
+                            <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <ion-icon name="flame-outline" class="text-purple-600 text-2xl"></ion-icon>
+                            </div>
+                            <h3 class="font-bold">Consistencia</h3>
+                            <p class="text-sm text-gray-600">5 días seguidos</p>
+                        </div>
+                        <div class="text-center p-4">
+                            <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <ion-icon name="checkmark-done-outline" class="text-green-600 text-2xl"></ion-icon>
+                            </div>
+                            <h3 class="font-bold">Rutina Completa</h3>
+                            <p class="text-sm text-gray-600">1ra rutina</p>
+                        </div>
+                        <div class="text-center p-4">
+                            <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <ion-icon name="lock-closed-outline" class="text-gray-600 text-2xl"></ion-icon>
+                            </div>
+                            <h3 class="font-bold text-gray-400">Próximo logro</h3>
+                            <p class="text-sm text-gray-400">10 días seguidos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA - CONFIGURACIÓN -->
+            <div class="space-y-8">
+                <!-- DATOS DEL USUARIO -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Tus Datos</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span class="font-medium text-gray-700">Nombre:</span>
+                            <span class="text-gray-900">{{ usuario.nombre }}</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span class="font-medium text-gray-700">Email:</span>
+                            <span class="text-gray-900">{{ usuario.email }}</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span class="font-medium text-gray-700">Altura:</span>
+                            <span class="text-gray-900">{{ usuario.altura }} cm</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span class="font-medium text-gray-700">Peso:</span>
+                            <span class="text-gray-900">{{ usuario.peso }} kg</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span class="font-medium text-gray-700">Edad:</span>
+                            <span class="text-gray-900">{{ usuario.edad }} años</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="font-medium text-gray-700">Objetivo:</span>
+                            <span class="text-gray-900">{{ usuario.objetivo }}</span>
+                        </div>
+                    </div>
+
+                    <button id="editDataBtn" class="mt-6 w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+                        <ion-icon name="create-outline" class="mr-2"></ion-icon>
+                        Actualizar mis datos
+                    </button>
+                </div>
+
+                <!-- FORMULARIO DE ACTUALIZACIÓN (OCULTO INICIALMENTE) -->
+                <div id="updateForm" class="bg-white rounded-xl shadow-md p-6 hidden">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Actualizar Datos</h2>
+                    
+                    <form id="userDataForm" class="space-y-4">
+                        <div>
+                            <label for="height" class="block text-sm font-medium text-gray-700 mb-1">Altura (cm)</label>
+                            <input type="number" id="height" name="height" value="{{ usuario.altura }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                        </div>
+                        
+                        <div>
+                            <label for="weight" class="block text-sm font-medium text-gray-700 mb-1">Peso (kg)</label>
+                            <input type="number" id="weight" name="weight" value="{{ usuario.peso }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                        </div>
+                        
+                        <div>
+                            <label for="age" class="block text-sm font-medium text-gray-700 mb-1">Edad</label>
+                            <input type="number" id="age" name="age" value="{{ usuario.edad }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                        </div>
+                        
+                        <div>
+                            <label for="goal" class="block text-sm font-medium text-gray-700 mb-1">Objetivo</label>
+                            <select id="goal" name="goal" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                <option value="weight_loss" {% if usuario.objetivo == "weight_loss" %}selected{% endif %}>Pérdida de peso</option>
+                                <option value="muscle_gain" {% if usuario.objetivo == "muscle_gain" %}selected{% endif %}>Ganancia muscular</option>
+                                <option value="endurance" {% if usuario.objetivo == "endurance" %}selected{% endif %}>Resistencia</option>
+                                <option value="maintenance" {% if usuario.objetivo == "maintenance" %}selected{% endif %}>Mantenimiento</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex space-x-4 pt-2">
+                            <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
+                                Guardar cambios
+                            </button>
+                            <button type="button" id="cancelEditBtn" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition duration-200">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ESTADÍSTICAS RÁPIDAS -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Tus Estadísticas</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-500">IMC Actual</p>
+                                    <p class="text-2xl font-bold">{{ usuario.imc }}</p>
+                                </div>
+                                <div class="text-green-500 bg-green-100 p-2 rounded-full">
+                                    <ion-icon name="trending-up-outline" class="text-xl"></ion-icon>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <div class="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 rounded-full" style="width: 60%;"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Rango saludable: 18.5 - 24.9</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <p class="text-sm text-gray-500">Días activos</p>
+                                <p class="text-2xl font-bold">12</p>
+                                <p class="text-xs text-blue-600 mt-1">+2 esta semana</p>
+                            </div>
+                            
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <p class="text-sm text-gray-500">Calorías quemadas</p>
+                                <p class="text-2xl font-bold">4,850</p>
+                                <p class="text-xs text-purple-600 mt-1">≈ 0.6kg</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <p class="text-sm text-gray-500">Próximo objetivo</p>
+                            <p class="font-bold">Perder 1.5kg</p>
+                            <p class="text-xs text-yellow-600 mt-1">Según tu progreso actual</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RECOMENDACIONES -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Recomendaciones para ti</h2>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <div class="bg-green-100 p-2 rounded-full mr-3 flex-shrink-0">
+                                <ion-icon name="barbell-outline" class="text-green-600"></ion-icon>
+                            </div>
+                            <div>
+                                <p class="font-medium">Intensifica tu rutina</p>
+                                <p class="text-sm text-gray-600">Estás listo para aumentar la intensidad de tus ejercicios.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-2 rounded-full mr-3 flex-shrink-0">
+                                <ion-icon name="water-outline" class="text-blue-600"></ion-icon>
+                            </div>
+                            <div>
+                                <p class="font-medium">Hidratación</p>
+                                <p class="text-sm text-gray-600">Bebe al menos 2L de agua hoy para mejorar tu rendimiento.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-purple-100 p-2 rounded-full mr-3 flex-shrink-0">
+                                <ion-icon name="restaurant-outline" class="text-purple-600"></ion-icon>
+                            </div>
+                            <div>
+                                <p class="font-medium">Cena ligera</p>
+                                <p class="text-sm text-gray-600">Prueba una ensalada con proteína para la cena de hoy.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="section footer-top bg-dark has-bg-image" style="background-image: url('{% static 'img/footer-bg.png' %}')">
+            <div class="container">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" width="65" height="65" loading="lazy" alt="Trainer">
+                        <span class="span">VitaFIT</span>
+                    </a>
+                    <p class="footer-brand-text">
+                        Etiam suscipit fringilla ullamcorper sed malesuada urna nec odio.
+                    </p>
+                </div>
+
+                <ul class="footer-list">
+                    <li>
+                        <p class="footer-list-title has-before">Nuestros links</p>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-link">Inicio</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-link">Sobre nosotros</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-link">Más informacón</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-link">Blog</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-link">Contactanos</a>
+                    </li>
+                </ul>
+
+                <ul class="footer-list">
+                    <li>
+                        <p class="footer-list-title has-before">Contactanos</p>
+                    </li>
+                    <li class="footer-list-item">
+                        <div class="icon">
+                            <ion-icon name="location" aria-hidden="true"></ion-icon>
+                        </div>
+                        <address class="address footer-link">
+                            Medellín, Colombia
+                        </address>
+                    </li>
+                    <li class="footer-list-item">
+                        <div class="icon">
+                            <ion-icon name="call" aria-hidden="true"></ion-icon>
+                        </div>
+                        <div>
+                            <a href="tel:3154998640" class="footer-link">3154998640</a>
+                            <a href="tel:+573154998640" class="footer-link">+573154998640</a>
+                        </div>
+                    </li>
+                    <li class="footer-list-item">
+                        <div class="icon">
+                            <ion-icon name="mail" aria-hidden="true"></ion-icon>
+                        </div>
+                        <div>
+                            <a href="mailto:info@fitlife.com" class="footer-link">info@VitaFIT.com</a>
+                            <a href="mailto:services@fitlife.com" class="footer-link">Servicios@VitaFIT.com</a>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="footer-list">
+                    <li>
+                        <p class="footer-list-title has-before">Hoja informativa</p>
+                    </li>
+                    <li>
+                        <form action="" class="footer-form">
+                            <input type="email" name="email_address" aria-label="email" placeholder="Correo electronico" required class="input-field">
+                            <button type="submit" class="btn btn-primary" aria-label="Submit">
+                                <ion-icon name="chevron-forward-sharp" aria-hidden="true"></ion-icon>
+                            </button>
+                        </form>
+                    </li>
+                    <li>
+                        <ul class="social-list">
+                            <li>
+                                <a href="#" class="social-link">
+                                    <ion-icon name="logo-facebook"></ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="social-link">
+                                    <ion-icon name="logo-instagram"></ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="social-link">
+                                    <ion-icon name="logo-twitter"></ion-icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright">
+                    &copy; 2025 VitaFIT. All Rights Reserved .
+                </p>
+                <ul class="footer-bottom-list">
+                    <li>
+                        <a href="#" class="footer-bottom-link has-before">Politcas de privacidad</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer-bottom-link has-before">Terminos y condiciones</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+        <ion-icon name="caret-up-sharp" aria-hidden="true"></ion-icon>
+    </a>
+
+    <script src="{% static 'js/script.js' %}" defer></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" defer></script>
+
+    <!-- ionicon link -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- JavaScript personalizado -->
+     link rel="stylesheet" href="{% static 'js/userd.js' %}">
+   
+
+</body>
+</html>

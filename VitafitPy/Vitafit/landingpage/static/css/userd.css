@@ -1,0 +1,88 @@
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeOutDown {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        
+        .animate-fade-out-down {
+            animation: fadeOutDown 0.5s ease-out forwards;
+        }
+        
+        /* Estilos adicionales */
+        .rutina-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .rutina-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .rutina-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .rutina-dificultad {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .dificultad-baja {
+            background-color: #D1FAE5;
+            color: #065F46;
+        }
+        
+        .dificultad-media {
+            background-color: #DBEAFE;
+            color: #1E40AF;
+        }
+        
+        .dificultad-alta {
+            background-color: #FEE2E2;
+            color: #991B1B;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            height: 100%;
+        }
+        
+        .emoji-rating {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+   
