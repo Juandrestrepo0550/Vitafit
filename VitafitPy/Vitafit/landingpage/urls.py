@@ -16,5 +16,6 @@ urlpatterns = [
     #path('logout/', views.cerrar_sesion, name='logout'),
 
     path('adminpage/', views.adminpage, name='adminpage'),
-    path('rutines/', views.rutines, name='rutines')
+    path('rutines/', views.rutines, name='rutines'),
+    path('userdash/', views.userdash, name='userdash'),
 ]
