@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina para Admins</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
     {% load static %} 
 
@@ -95,33 +96,18 @@
         </aside>
 
         <div class="main">
-            <nav class="navbar navbar-expand px-4 py-3">
-                <form action="#" class="d-none d-sm-inline-block">
-                    <div class="input-group input-group-navbar">
-                        <input type="text" class="form-control border-0 rounded-0" placeholder="Busque aqui">
-                        <button class="btn border-0 rounded-0" type="button">
-                            Buscar
-                        </button>
-                    </div>
-                </form>
-                <div class="navbar-collapse collapse">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-icon pe-md-0" data-bs-toggle="dropdown">
-                                <img src="img/account.png" class="avatar img-fluid" alt="">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end rounded">
-                                <a href="#" class="dropdown-item">
-                                    <i class="lni lni-restaurant"></i>
-                                    <span>Mi perfil</span>
-                                </a>
-                                <a href="" class="dropdown-item">
-                                    <i class="lni lni-restaurant"></i>
-                                    <span>Cerrar sesión</span>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
+            <nav class="flex justify-between items-center bg-gray-400 px-6 py-3 text-white shadow">
+                <!-- Izquierda: Logo + Título -->
+                <div class="flex items-center space-x-3">
+                    <span class="font-bold text-blue-800 text-lg">TENKAI SCANLATION</span>
+                    <span class="text-sm">PANEL DE CONTROL</span>
+                </div>
+
+                <!-- Derecha: Links -->
+                <div class="flex space-x-6 text-sm">
+                    <a href="#" class="hover:opacity-75 transition">Ir a la Guía</a>
+                    <a href="#" class="hover:opacity-75 transition">Ir a mi perfil</a>
+                    <a href="#" class="hover:opacity-75 transition">Vitafit</a>
                 </div>
             </nav>
 
