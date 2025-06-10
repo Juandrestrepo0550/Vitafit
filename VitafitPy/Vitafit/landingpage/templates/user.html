@@ -32,56 +32,73 @@
     
     <!-- HEADER -->
     <!-- HEADER con menú responsive -->
-    <header class="bg-white shadow sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" alt="Logo" class="h-16">
-                <h1 class="text-4xl font-black text-green-600 tracking-tight">VitaFIT</h1>
-            </div>
+     <!-- HEADER con menú responsive -->
+      <!-- Header Mejorado -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-24"> <!-- Aumenté la altura de h-20 a h-24 -->
+            <!-- Logo y nombre - Aumenté el tamaño del logo y del texto -->
+            <a href="{% url 'index' %}" class="flex items-center space-x-3"> <!-- Aumenté space-x-2 a space-x-3 -->
+                <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" alt="VitaFIT Logo" class="h-16"> <!-- Aumenté de h-12 a h-16 -->
+                <span class="logo-text text-4xl font-extrabold text-green-600">VitaFIT</span> <!-- Aumenté de text-3xl a text-4xl -->
+            </a>
 
-            <!-- Botón hamburguesa para móviles -->
-            <div class="md:hidden">
-                <button id="menu-toggle" class="text-green-600 text-3xl focus:outline-none">
-                    <ion-icon name="menu-outline"></ion-icon>
-                </button>
-            </div>
-
-            <!-- Menú desktop -->
-            <nav class="hidden md:flex items-center gap-4">
-                <a href="{% url 'index' %}" class="flex items-center gap-2 px-5 py-2.5 bg-green-500 text-white font-semibold rounded-full shadow-md hover:bg-green-600 transition">
-                    <ion-icon name="home-outline" class="text-xl"></ion-icon>
+            <!-- Menú desktop - Aumenté el tamaño de los elementos -->
+            <nav class="hidden md:flex items-center space-x-8"> <!-- Aumenté space-x-6 a space-x-8 -->
+                <a href="{% url 'index' %}" class="nav-link text-gray-700 hover:text-green-600 font-medium flex items-center space-x-2 text-lg"> <!-- Añadí text-lg -->
+                    <ion-icon name="home-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
                     <span>Inicio</span>
                 </a>
-                <a href="{% url 'rutines' %}" class="flex items-center gap-2 px-5 py-2.5 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-600 transition">
-                    <ion-icon name="barbell-outline" class="text-xl"></ion-icon>
+                
+                <a href="{% url 'rutines' %}" class="nav-link text-gray-700 hover:text-green-600 font-medium flex items-center space-x-2 text-lg"> <!-- Añadí text-lg -->
+                    <ion-icon name="barbell-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
                     <span>Rutinas</span>
                 </a>
-                <a href="{% url 'logout' %}" title="Cerrar sesión" class="flex items-center gap-2 px-5 py-2.5 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition">
-                    <ion-icon name="exit-outline" class="text-xl"></ion-icon>
-                    <span>Salir</span>
+                
+                <a href="#" class="nav-link text-gray-700 hover:text-green-600 font-medium flex items-center space-x-2 text-lg"> <!-- Añadí text-lg -->
+                    <ion-icon name="nutrition-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                    <span>Nutrición</span>
+                </a>
+                
+                <!-- Botón especial para volver - Aumenté el tamaño -->
+                <a href="{% url 'index' %}" class="btn-hover-effect bg-gradient-to-r from-green-500 to-green-600 text-white px-7 py-3 rounded-full font-semibold shadow-md flex items-center space-x-2 text-lg"> <!-- Aumenté px-6 a px-7 y py-2 a py-3 -->
+                    <ion-icon name="arrow-back-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                    <span>Volver al Inicio</span>
                 </a>
             </nav>
-        </div>
 
-        <!-- Menú móvil -->
-        <div id="mobile-menu" class="md:hidden hidden px-6 pb-4">
-            <nav class="flex flex-col gap-3">
-                <a href="{% url 'index' %}" class="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 font-medium rounded-lg hover:bg-green-200">
-                    <ion-icon name="home-outline" class="text-lg"></ion-icon>
-                    <span>Inicio</span>
-                </a>
-                <a href="{% url 'rutines' %}" class="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-800 font-medium rounded-lg hover:bg-blue-200">
-                    <ion-icon name="barbell-outline" class="text-lg"></ion-icon>
-                    <span>Rutinas</span>
-                </a>
-                <a href="{% url 'logout' %}" class="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-800 font-medium rounded-lg hover:bg-red-200">
-                    <ion-icon name="exit-outline" class="text-lg"></ion-icon>
-                    <span>Salir</span>
-                </a>
-            </nav>
+            <!-- Botón hamburguesa para móvil - Aumenté el tamaño -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <ion-icon name="menu-outline" class="text-4xl"></ion-icon> <!-- Aumenté de text-3xl a text-4xl -->
+            </button>
         </div>
-    </header>
-  
+    </div>
+
+    <!-- Menú móvil - Aumenté el tamaño de los elementos -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+        <div class="px-4 py-4 space-y-4"> <!-- Aumenté py-3 a py-4 y space-y-3 a space-y-4 -->
+            <a href="{% url 'index' %}" class="block px-4 py-3 text-gray-700 hover:bg-green-50 rounded-lg flex items-center space-x-2 text-lg"> <!-- Aumenté py-2 a py-3 y añadí text-lg -->
+                <ion-icon name="home-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                <span>Inicio</span>
+            </a>
+            
+            <a href="{% url 'rutines' %}" class="block px-4 py-3 text-gray-700 hover:bg-green-50 rounded-lg flex items-center space-x-2 text-lg"> <!-- Aumenté py-2 a py-3 y añadí text-lg -->
+                <ion-icon name="barbell-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                <span>Rutinas</span>
+            </a>
+            
+            <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-green-50 rounded-lg flex items-center space-x-2 text-lg"> <!-- Aumenté py-2 a py-3 y añadí text-lg -->
+                <ion-icon name="nutrition-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                <span>Nutrición</span>
+            </a>
+            
+            <a href="{% url 'index' %}" class="block px-4 py-3 bg-green-600 text-white rounded-lg font-medium flex items-center justify-center space-x-2 text-lg"> <!-- Aumenté py-2 a py-3 y añadí text-lg -->
+                <ion-icon name="arrow-back-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                <span>Volver al Inicio</span>
+            </a>
+        </div>
+    </div>
+</header>
 
     <!-- MAIN CONTENT -->
     <main class="container mx-auto px-4 py-8">
@@ -980,14 +997,43 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-    <!-- Script para menú móvil -->
+<!-- Script para el menú móvil -->
     <script>
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                
+                // Cambiar el icono según el estado del menú
+                const icon = mobileMenuButton.querySelector('ion-icon');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.setAttribute('name', 'menu-outline');
+                } else {
+                    icon.setAttribute('name', 'close-outline');
+                }
+            });
+            
+            // Animación de notificación al cargar
+            setTimeout(() => {
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center animate-fade-in-up z-50';
+                notification.innerHTML = `
+                    <ion-icon name="fitness-outline" class="text-xl mr-2"></ion-icon>
+                    <span>¡Bienvenido a VitaFIT!</span>
+                    <button class="ml-4 text-white hover:text-gray-200" onclick="this.parentElement.remove()">
+                        <ion-icon name="close"></ion-icon>
+                    </button>
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.remove('animate-fade-in-up');
+                    notification.classList.add('animate-fade-out-down');
+                    setTimeout(() => notification.remove(), 500);
+                }, 5000);
+            }, 1000);
         });
     </script>
-</body>
 </html>
