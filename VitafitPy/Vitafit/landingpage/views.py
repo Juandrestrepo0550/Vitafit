@@ -96,6 +96,9 @@ def adminpage(request):
 def rutines(request):
     return render(request, 'rutinas.html')
 
+def userd(request):
+    return render(request, 'user.html')
+
 
 
     if check_password(contrasena, usuario.contrasena):
