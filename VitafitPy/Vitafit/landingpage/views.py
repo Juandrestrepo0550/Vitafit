@@ -6,6 +6,7 @@ from .models import Usuarios
 from django.contrib.auth.hashers import check_password
 from django.urls import reverse
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -93,9 +94,11 @@ def cerrar_sesion(request):
 def adminpage(request):
     return render(request, 'dashboard.html')
 
+@login_required(login_url='login')
 def rutines(request):
     return render(request, 'rutinas.html')
 
+@login_required(login_url='login')
 def userd(request):
     return render(request, 'user.html')
 
