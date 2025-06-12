@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Chat Salud y Fitness</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/recomendaciones.css' %}">
+</head>
+<body class="relative min-h-screen bg-green-50">
+
+
+  <!-- Botón flotante -->
+  <button id="toggleChat" class="fixed bottom-4 right-4 bg-red-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-red-700 transition-all z-50">
+    💬 Chat
+  </button>
+
+  <!-- Chat Widget -->
+  <div id="chatWidget" class="fixed bottom-20 right-4 w-[400px] h-[500px] bg-[#71c664] text-white rounded-2xl shadow-xl hidden flex flex-col overflow-hidden z-50">
+
+    <!-- Encabezado del chat -->
+    <div class="flex justify-between items-center px-4 py-3 border-b border-white/20 bg-[#60b955]">
+      <h3 class="text-lg font-bold text-black">Asistente Fitness</h3>
+      <div class="space-x-2">
+        <button id="minimizeChat" class="text-red-500 font-bold hover:text-red-600">_</button>
+        <button id="closeChat" class="text-red-500 font-bold hover:text-red-600">×</button>
+      </div>
+    </div>
+
+    <!-- Área de mensajes -->
+    <div id="chatbox" class="p-4 space-y-2 overflow-y-auto h-64">
+      <!-- Mensajes aparecerán aquí -->
+    </div>
+
+    <!-- Input -->
+    <div class="p-3 border-t border-white/20 bg-[#60b955]">
+      <div class="flex gap-2">
+        <input type="text" id="userInput" placeholder="Escribe tu mensaje..." class="flex-1 px-3 py-2 rounded-xl text-black bg-white placeholder-gray-400 focus:outline-none">
+        <button onclick="enviarMensaje()" class="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="{% static 'js/recomendaciones.js' %}"></script>
+</body>
+</html>
