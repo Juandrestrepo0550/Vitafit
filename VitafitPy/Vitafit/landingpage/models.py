@@ -22,7 +22,7 @@ class Usuarios(models.Model):
     token = models.CharField(max_length=128, blank=True, null=True)
     token_expiracion = models.DateTimeField(blank=True, null=True)
     estado = models.CharField(max_length=8)
-
+    
     class Meta:
         managed = False
         db_table = 'usuarios'
