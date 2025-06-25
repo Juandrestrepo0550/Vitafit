@@ -11,11 +11,10 @@ urlpatterns = [
     path('inicio_sesion/',views.inicio_sesion, name='inicio_sesion'),
     path('logout/', views.cerrar_sesion, name='logout'),    #path('adminpage/', views.adminpage, name='adminpage'), #9784e266c2f4109c726a77594b6737b054cab221
     #path('logout/', views.cerrar_sesion, name='logout'),
+    
     path('adminpage/', views.adminpage, name='adminpage'),
+    
     path('rutines/', views.rutines, name='rutines'),
-<<<<<<< HEAD
-    path('userd/', views.userd, name='userd')    
-=======
-    path('recomendaciones/', views.recomendaciones_vi, name='recomendaciones')
->>>>>>> ee0ab716589e28a42a19646dba91dd761f27a88e
+    
+    path('userd/', views.userd, name='userd'),
 ]
