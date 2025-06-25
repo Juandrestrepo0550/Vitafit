@@ -13,5 +13,9 @@ urlpatterns = [
     #path('logout/', views.cerrar_sesion, name='logout'),
     path('adminpage/', views.adminpage, name='adminpage'),
     path('rutines/', views.rutines, name='rutines'),
+<<<<<<< HEAD
     path('userd/', views.userd, name='userd')    
+=======
+    path('recomendaciones/', views.recomendaciones_vi, name='recomendaciones')
+>>>>>>> ee0ab716589e28a42a19646dba91dd761f27a88e
 ]

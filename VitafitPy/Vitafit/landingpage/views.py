@@ -112,3 +112,6 @@ def userd(request):
     else:
         messages.error(request, "Contraseña incorrecta.")
         return render(request, 'login.html', {'form_type': 'login'})
+    
+def recomendaciones_vi(request):
+    return render(request, 'recomendaciones.html')
