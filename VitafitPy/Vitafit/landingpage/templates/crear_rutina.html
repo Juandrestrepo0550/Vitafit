@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear Rutina</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Banner superior -->
+  <div class="bg-green-400 text-white text-center py-2 font-semibold cursor-pointer">
+    Reglas de creación (Click para leer)
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="max-w-4xl mx-auto mt-10 bg-white shadow-md rounded-md p-8">
+    <h1 class="text-2xl font-semibold text-blue-700 mb-6">Crear rutina</h1>
+
+    <p class="text-red-600 mb-4 text-sm font-medium">
+      *Podrás gestionar esta rutina (añadir o eliminar ejercicios, cambiar el orden, etc)
+    </p>
+
+    <!-- Formulario -->
+    <form>
+
+      <!-- Idioma (puede representar idioma de instrucción o mantenerlo como decorativo) -->
+      <div class="mb-4">
+        <label class="block font-medium mb-1">Idioma</label>
+        <p class="flex items-center space-x-2">
+          <img src="https://flagcdn.com/w40/es.png" alt="Español" class="w-5 h-5">
+          <span>Español | El idioma de creación es el seleccionado en la página</span>
+        </p>
+      </div>
+
+      <!-- Nombre de la rutina -->
+      <div class="mb-4">
+        <label for="nombre" class="block font-medium mb-1">Nombre de la rutina</label>
+        <input type="text" id="nombre" placeholder="Introduce el nombre de la rutina"
+               class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <p class="text-sm mt-1">Elige un nombre descriptivo para tu rutina de ejercicios.</p>
+      </div>
+
+      <!-- Categoría o grupo -->
+      <div class="mb-4">
+        <label for="grupo" class="block font-medium mb-1">Categoría o grupo</label>
+        <select id="grupo" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option>Selecciona una categoría</option>
+          <option>Fuerza</option>
+          <option>Cardio</option>
+          <option>Flexibilidad</option>
+          <option>Mixto</option>
+        </select>
+      </div>
+
+      <!-- Enlaces (pueden ser videos o documentos de apoyo) -->
+      <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="text" placeholder="Enlace de video (opcional)"
+               class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <input type="text" placeholder="Enlace de documento (opcional)"
+               class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <!-- Tiempo de activación o publicación -->
+      <div class="mb-6">
+        <label class="block font-medium mb-1">Publicación programada</label>
+        <div class="flex items-center space-x-4">
+          <input type="number" value="0"
+                 class="w-24 border border-gray-300 rounded px-2 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <span class="text-sm">Horas para publicar la rutina:</span>
+        </div>
+        <p class="text-sm mt-1 text-gray-600">Tiempo en horas para retrasar la publicación de la rutina (debe estar validada previamente).</p>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex justify-between">
+        <button type="button" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">
+          ✖ Cancelar
+        </button>
+        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
+          ✅ Crear Rutina
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</body>
+</html>

@@ -115,3 +115,6 @@ def userd(request):
     
 def recomendaciones_vi(request):
     return render(request, 'recomendaciones.html')
+
+def crear_rutina(request):
+    return render(request, 'crear_rutina.html')

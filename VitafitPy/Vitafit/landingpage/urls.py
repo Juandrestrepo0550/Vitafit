@@ -17,4 +17,6 @@ urlpatterns = [
     path('rutines/', views.rutines, name='rutines'),
     
     path('userd/', views.userd, name='userd'),
+
+    path('crear/', views.crear_rutina, name='crear_rutina'),
 ]
