@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/userd.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> {% endcomment %}
 
     <title>VitaFIT - Mi Perfil</title>
 
@@ -24,75 +23,126 @@
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body id="top" class="bg-gray-50">
+
     
+     {% if not request.user.is_authenticated %}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Acceso denegado',
+                text: 'Debes iniciar sesión para ver tu perfil.',
+                confirmButtonColor: '#10B981'
+            }).then(() => {
+                window.location.href = "{% url 'login' %}";
+            });
+        </script>
+    {% endif %}
     <!-- HEADER -->
-    <header class="header" data-header>
-        <div class="container">
-            <a href="#" class="logo" style="display: flex; align-items: center; gap: 8px;">
-                <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" alt="Logo VitaFIT" style="height: 50px;">
-                <span class="logo-text">VitaFIT</span>
+    <!-- HEADER con menú responsive -->
+     <!-- HEADER con menú responsive -->
+      <!-- Header Mejorado -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-24"> <!-- Aumenté la altura de h-20 a h-24 -->
+            <!-- Logo y nombre - Aumenté el tamaño del logo y del texto -->
+            <a href="{% url 'index' %}" class="flex items-center space-x-3"> <!-- Aumenté space-x-2 a space-x-3 -->
+                <img src="{% static 'img/vitafitlogo_sinfondo.png' %}" alt="VitaFIT Logo" class="h-16"> <!-- Aumenté de h-12 a h-16 -->
+                <span class="logo-text text-4xl font-extrabold text-green-600">VitaFIT</span> <!-- Aumenté de text-3xl a text-4xl -->
             </a>
 
-            <nav class="navbar" data-navbar>
-                <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-                    <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
-                </button>
-
-                <ul class="navbar-list">
-                    <li><a href="{% url 'index' %}" class="navbar-link" data-nav-link>Inicio</a></li>
-                    <li><a href="#about" class="navbar-link" data-nav-link>Sobre nosotros</a></li>
-                    <li><a href="{% url 'rutines' %}" class="navbar-link" data-nav-link>Rutinas</a></li>
-                    <li><a href="#blog" class="navbar-link" data-nav-link>Plan nutricional</a></li>
-                    <li><a href="#" class="navbar-link" data-nav-link>Calculadora de macros</a></li>
-                    
-                    {% if request.session.usuario_id %}
-                    <div class="flex items-center gap-5 ml-4">
-                        <!-- Ícono de usuario -->
-                        <a href="{% url 'adminpage' %}" class="text-gray-700 hover:text-green-600 text-5xl">
-                            <ion-icon name="person-circle-outline"></ion-icon>
-                        </a>
-
-                        <!-- Ícono de cerrar sesión -->
-                        <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-800 text-5xl">
-                            <ion-icon name="log-out-outline"></ion-icon>
-                        </a>
-                    </div>
-                    {% else %}
-                    <a href="{% url 'login' %}" class="auth-btn login" data-nav-link>Regístrate</a>
-                    {% endif %}
-                </ul>
+            <!-- Menú desktop - Aumenté el tamaño de los elementos -->
+            <nav class="hidden md:flex items-center space-x-8"> <!-- Aumenté space-x-6 a space-x-8 -->
+                <a href="{% url 'index' %}" class="nav-link text-gray-700 hover:text-green-600 font-medium flex items-center space-x-2 text-lg"> <!-- Añadí text-lg -->
+                    <ion-icon name="home-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                    <span>Inicio</span>
+                </a>
+                
+                <a href="{% url 'rutines' %}" class="nav-link text-gray-700 hover:text-green-600 font-medium flex items-center space-x-2 text-lg"> <!-- Añadí text-lg -->
+                    <ion-icon name="barbell-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                    <span>Rutinas</span>
+                </a>
+                
+                <a href="#" class="nav-link text-gray-700 hover:text-green-600 font-medium flex items-center space-x-2 text-lg"> <!-- Añadí text-lg -->
+                    <ion-icon name="nutrition-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                    <span>Nutrición</span>
+                </a>
+                
+                <!-- Botón especial para volver - Aumenté el tamaño -->
+                <a href="{% url 'index' %}" class="btn-hover-effect bg-gradient-to-r from-green-500 to-green-600 text-white px-7 py-3 rounded-full font-semibold shadow-md flex items-center space-x-2 text-lg"> <!-- Aumenté px-6 a px-7 y py-2 a py-3 -->
+                    <ion-icon name="arrow-back-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                    <span>Volver al Inicio</span>
+                </a>
             </nav>
 
-            <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
-                <span class="line"></span>
-                <span class="line"></span>
-                <span class="line"></span>
+            <!-- Botón hamburguesa para móvil - Aumenté el tamaño -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <ion-icon name="menu-outline" class="text-4xl"></ion-icon> <!-- Aumenté de text-3xl a text-4xl -->
             </button>
         </div>
-    </header>
+    </div>
+
+    <!-- Menú móvil - Aumenté el tamaño de los elementos -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+        <div class="px-4 py-4 space-y-4"> <!-- Aumenté py-3 a py-4 y space-y-3 a space-y-4 -->
+            <a href="{% url 'index' %}" class="block px-4 py-3 text-gray-700 hover:bg-green-50 rounded-lg flex items-center space-x-2 text-lg"> <!-- Aumenté py-2 a py-3 y añadí text-lg -->
+                <ion-icon name="home-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                <span>Inicio</span>
+            </a>
+            
+            <a href="{% url 'rutines' %}" class="block px-4 py-3 text-gray-700 hover:bg-green-50 rounded-lg flex items-center space-x-2 text-lg"> <!-- Aumenté py-2 a py-3 y añadí text-lg -->
+                <ion-icon name="barbell-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                <span>Rutinas</span>
+            </a>
+            
+            <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-green-50 rounded-lg flex items-center space-x-2 text-lg"> <!-- Aumenté py-2 a py-3 y añadí text-lg -->
+                <ion-icon name="nutrition-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                <span>Nutrición</span>
+            </a>
+            
+            <a href="{% url 'index' %}" class="block px-4 py-3 bg-green-600 text-white rounded-lg font-medium flex items-center justify-center space-x-2 text-lg"> <!-- Aumenté py-2 a py-3 y añadí text-lg -->
+                <ion-icon name="arrow-back-outline" class="text-2xl"></ion-icon> <!-- Aumenté de text-xl a text-2xl -->
+                <span>Volver al Inicio</span>
+            </a>
+        </div>
+    </div>
+</header>
 
     <!-- MAIN CONTENT -->
     <main class="container mx-auto px-4 py-8">
         <!-- HERO USER DASHBOARD -->
-        <section class="bg-gradient-to-r from-green-500 to-green-700 rounded-xl p-8 mb-10 shadow-lg">
-            <div class="flex flex-col md:flex-row items-center justify-between">
+        <section class="bg-gradient-to-r from-green-500 to-green-700 rounded-xl p-8 mb-10 shadow-lg relative overflow-hidden">
+            <!-- Elementos decorativos -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-green-400 rounded-full opacity-20"></div>
+            <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-green-300 rounded-full opacity-10"></div>
+            
+            <div class="flex flex-col md:flex-row items-center justify-between relative z-10">
                 <div class="text-white mb-6 md:mb-0">
                     <h1 class="text-4xl md:text-5xl font-extrabold mb-2">¡Bienvenido de vuelta!</h1>
                     <p class="text-xl opacity-90">Aquí puedes gestionar tu progreso y configurar tu experiencia VitaFIT</p>
                 </div>
                 <div class="flex items-center">
-                    <div class="relative">
-                        <img src="{% static 'img/user-avatar.png' %}" alt="Foto de perfil" class="w-24 h-24 rounded-full border-4 border-white shadow-lg">
-                        <span class="absolute bottom-0 right-0 bg-green-400 text-white rounded-full p-1">
+                    <div class="relative group">
+                        <img src="{% static 'img/user-avatar.png' %}" alt="Foto de perfil" class="w-24 h-24 rounded-full border-4 border-white shadow-lg transition-transform duration-300 group-hover:scale-105">
+                        <span class="absolute bottom-0 right-0 bg-green-400 text-white rounded-full p-1 cursor-pointer hover:bg-green-500 transition-colors duration-200">
                             <ion-icon name="camera" class="text-xl"></ion-icon>
                         </span>
                     </div>
                     <div class="ml-4 text-white">
                         <h2 class="text-2xl font-bold">{{ usuario.nombre }}</h2>
                         <p class="text-sm opacity-80">Miembro desde {{ usuario.fecha_registro }}</p>
+                        <div class="flex items-center mt-1">
+                            <span class="text-xs bg-green-600 bg-opacity-70 px-2 py-1 rounded-full">Nivel 3</span>
+                            <div class="w-16 bg-gray-300 rounded-full h-1.5 ml-2">
+                                <div class="bg-yellow-400 h-1.5 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,25 +153,41 @@
             <!-- COLUMNA IZQUIERDA - ESTADÍSTICAS -->
             <div class="lg:col-span-2 space-y-8">
                 <!-- PROGRESO SEMANAL -->
-                <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-bold text-gray-800">Tu Progreso Semanal</h2>
-                        <select class="bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                            <option>Esta semana</option>
-                            <option>Últimas 2 semanas</option>
-                            <option>Último mes</option>
+                        <select id="progressFilter" class="bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer">
+                            <option value="week">Esta semana</option>
+                            <option value="2weeks">Últimas 2 semanas</option>
+                            <option value="month">Último mes</option>
                         </select>
                     </div>
                     <div class="h-64">
                         <canvas id="progressChart"></canvas>
                     </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                            <span class="text-sm text-gray-600">Minutos de ejercicio</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                            <span class="text-sm text-gray-600">Calorías quemadas</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- RUTINA ACTUAL -->
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Tu Rutina Actual</h2>
+                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Tu Rutina Actual</h2>
+                        <a href="#" class="text-green-600 hover:text-green-800 font-medium flex items-center">
+                            Cambiar rutina
+                            <ion-icon name="chevron-forward-outline" class="ml-1"></ion-icon>
+                        </a>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-green-50 rounded-lg p-5 border-l-4 border-green-500">
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-5 border-l-4 border-green-500 hover:shadow-md transition-shadow duration-300">
                             <div class="flex items-center mb-3">
                                 <div class="bg-green-100 p-3 rounded-full mr-4">
                                     <ion-icon name="barbell-outline" class="text-green-600 text-xl"></ion-icon>
@@ -138,9 +204,12 @@
                             <div class="w-full bg-gray-200 rounded-full h-2.5">
                                 <div class="bg-green-600 h-2.5 rounded-full" style="width: 65%"></div>
                             </div>
+                            <button class="mt-4 w-full bg-white text-green-600 border border-green-600 hover:bg-green-600 hover:text-white py-2 rounded-lg transition-colors duration-200 font-medium">
+                                Ver detalles
+                            </button>
                         </div>
 
-                        <div class="bg-blue-50 rounded-lg p-5 border-l-4 border-blue-500">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-5 border-l-4 border-blue-500 hover:shadow-md transition-shadow duration-300">
                             <div class="flex items-center mb-3">
                                 <div class="bg-blue-100 p-3 rounded-full mr-4">
                                     <ion-icon name="nutrition-outline" class="text-blue-600 text-xl"></ion-icon>
@@ -157,48 +226,59 @@
                             <div class="w-full bg-gray-200 rounded-full h-2.5">
                                 <div class="bg-blue-600 h-2.5 rounded-full" style="width: 42%"></div>
                             </div>
+                            <button class="mt-4 w-full bg-white text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white py-2 rounded-lg transition-colors duration-200 font-medium">
+                                Ver detalles
+                            </button>
                         </div>
-                    </div>
-
-                    <div class="mt-6">
-                        <a href="#" class="inline-flex items-center text-green-600 font-medium hover:text-green-800">
-                            Ver detalles completos
-                            <ion-icon name="chevron-forward-outline" class="ml-1"></ion-icon>
-                        </a>
                     </div>
                 </div>
 
                 <!-- LOGROS -->
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Tus Logros</h2>
+                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Tus Logros</h2>
+                        <a href="#" class="text-green-600 hover:text-green-800 font-medium flex items-center">
+                            Ver todos
+                            <ion-icon name="chevron-forward-outline" class="ml-1"></ion-icon>
+                        </a>
+                    </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="text-center p-4">
+                        <div class="text-center p-4 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg hover:shadow-md transition-all duration-300 cursor-pointer transform hover:-translate-y-1">
                             <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
                                 <ion-icon name="trophy-outline" class="text-yellow-600 text-2xl"></ion-icon>
                             </div>
                             <h3 class="font-bold">Principiante</h3>
                             <p class="text-sm text-gray-600">Primera semana</p>
+                            <span class="text-xs text-yellow-600 mt-1">¡Completado!</span>
                         </div>
-                        <div class="text-center p-4">
+                        <div class="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg hover:shadow-md transition-all duration-300 cursor-pointer transform hover:-translate-y-1">
                             <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
                                 <ion-icon name="flame-outline" class="text-purple-600 text-2xl"></ion-icon>
                             </div>
                             <h3 class="font-bold">Consistencia</h3>
                             <p class="text-sm text-gray-600">5 días seguidos</p>
+                            <span class="text-xs text-purple-600 mt-1">¡Completado!</span>
                         </div>
-                        <div class="text-center p-4">
+                        <div class="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg hover:shadow-md transition-all duration-300 cursor-pointer transform hover:-translate-y-1">
                             <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
                                 <ion-icon name="checkmark-done-outline" class="text-green-600 text-2xl"></ion-icon>
                             </div>
                             <h3 class="font-bold">Rutina Completa</h3>
                             <p class="text-sm text-gray-600">1ra rutina</p>
+                            <span class="text-xs text-green-600 mt-1">¡Completado!</span>
                         </div>
-                        <div class="text-center p-4">
+                        <div class="text-center p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg hover:shadow-md transition-all duration-300 cursor-pointer transform hover:-translate-y-1">
                             <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
                                 <ion-icon name="lock-closed-outline" class="text-gray-600 text-2xl"></ion-icon>
                             </div>
-                            <h3 class="font-bold text-gray-400">Próximo logro</h3>
-                            <p class="text-sm text-gray-400">10 días seguidos</p>
+                            <h3 class="font-bold text-gray-400">10 días seguidos</h3>
+                            <p class="text-sm text-gray-400">Próximo logro</p>
+                            <div class="mt-1">
+                                <div class="w-full bg-gray-200 rounded-full h-1">
+                                    <div class="bg-green-500 h-1 rounded-full" style="width: 60%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">60% completado</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -207,33 +287,38 @@
             <!-- COLUMNA DERECHA - CONFIGURACIÓN -->
             <div class="space-y-8">
                 <!-- DATOS DEL USUARIO -->
-                <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Tus Datos</h2>
                     
                     <div class="space-y-4">
                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
                             <span class="font-medium text-gray-700">Nombre:</span>
-                            <span class="text-gray-900">{{ usuario.nombre }}</span>
+                            <span class="text-gray-900" id="display-name">{{ usuario.nombre }}</span>
                         </div>
                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
                             <span class="font-medium text-gray-700">Email:</span>
-                            <span class="text-gray-900">{{ usuario.email }}</span>
+                            <span class="text-gray-900" id="display-email">{{ usuario.email }}</span>
                         </div>
                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
                             <span class="font-medium text-gray-700">Altura:</span>
-                            <span class="text-gray-900">{{ usuario.altura }} cm</span>
+                            <span class="text-gray-900" id="display-height">{{ usuario.altura }} cm</span>
                         </div>
                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
                             <span class="font-medium text-gray-700">Peso:</span>
-                            <span class="text-gray-900">{{ usuario.peso }} kg</span>
+                            <span class="text-gray-900" id="display-weight">{{ usuario.peso }} kg</span>
                         </div>
                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
                             <span class="font-medium text-gray-700">Edad:</span>
-                            <span class="text-gray-900">{{ usuario.edad }} años</span>
+                            <span class="text-gray-900" id="display-age">{{ usuario.edad }} años</span>
                         </div>
                         <div class="flex justify-between items-center py-2">
                             <span class="font-medium text-gray-700">Objetivo:</span>
-                            <span class="text-gray-900">{{ usuario.objetivo }}</span>
+                            <span class="text-gray-900" id="display-goal">
+                                {% if usuario.objetivo == "weight_loss" %}Pérdida de peso{% endif %}
+                                {% if usuario.objetivo == "muscle_gain" %}Ganancia muscular{% endif %}
+                                {% if usuario.objetivo == "endurance" %}Resistencia{% endif %}
+                                {% if usuario.objetivo == "maintenance" %}Mantenimiento{% endif %}
+                            </span>
                         </div>
                     </div>
 
@@ -285,15 +370,15 @@
                 </div>
 
                 <!-- ESTADÍSTICAS RÁPIDAS -->
-                <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Tus Estadísticas</h2>
                     
                     <div class="space-y-4">
-                        <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="bg-gray-50 p-4 rounded-lg hover:shadow-sm transition-shadow duration-200">
                             <div class="flex items-center justify-between">
                                 <div>
                                     <p class="text-sm text-gray-500">IMC Actual</p>
-                                    <p class="text-2xl font-bold">{{ usuario.imc }}</p>
+                                    <p class="text-2xl font-bold" id="imc-value">{{ usuario.imc }}</p>
                                 </div>
                                 <div class="text-green-500 bg-green-100 p-2 rounded-full">
                                     <ion-icon name="trending-up-outline" class="text-xl"></ion-icon>
@@ -301,40 +386,45 @@
                             </div>
                             <div class="mt-2">
                                 <div class="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
-                                    <div class="h-full bg-green-500 rounded-full" style="width: 60%;"></div>
+                                    <div class="h-full bg-green-500 rounded-full" id="imc-bar" style="width: 60%;"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">Rango saludable: 18.5 - 24.9</p>
                             </div>
                         </div>
                         
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="bg-blue-50 p-4 rounded-lg hover:shadow-sm transition-shadow duration-200">
                                 <p class="text-sm text-gray-500">Días activos</p>
-                                <p class="text-2xl font-bold">12</p>
+                                <p class="text-2xl font-bold" id="active-days">12</p>
                                 <p class="text-xs text-blue-600 mt-1">+2 esta semana</p>
                             </div>
                             
-                            <div class="bg-purple-50 p-4 rounded-lg">
+                            <div class="bg-purple-50 p-4 rounded-lg hover:shadow-sm transition-shadow duration-200">
                                 <p class="text-sm text-gray-500">Calorías quemadas</p>
-                                <p class="text-2xl font-bold">4,850</p>
+                                <p class="text-2xl font-bold" id="calories-burned">4,850</p>
                                 <p class="text-xs text-purple-600 mt-1">≈ 0.6kg</p>
                             </div>
                         </div>
                         
-                        <div class="bg-yellow-50 p-4 rounded-lg">
+                        <div class="bg-yellow-50 p-4 rounded-lg hover:shadow-sm transition-shadow duration-200">
                             <p class="text-sm text-gray-500">Próximo objetivo</p>
-                            <p class="font-bold">Perder 1.5kg</p>
+                            <p class="font-bold" id="next-goal">Perder 1.5kg</p>
                             <p class="text-xs text-yellow-600 mt-1">Según tu progreso actual</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- RECOMENDACIONES -->
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Recomendaciones para ti</h2>
+                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Recomendaciones</h2>
+                        <button id="refresh-recommendations" class="text-green-600 hover:text-green-800 p-1 rounded-full hover:bg-green-50 transition-colors duration-200">
+                            <ion-icon name="refresh-outline" class="text-xl"></ion-icon>
+                        </button>
+                    </div>
                     
-                    <div class="space-y-3">
-                        <div class="flex items-start">
+                    <div id="recommendations-container" class="space-y-3">
+                        <div class="flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer">
                             <div class="bg-green-100 p-2 rounded-full mr-3 flex-shrink-0">
                                 <ion-icon name="barbell-outline" class="text-green-600"></ion-icon>
                             </div>
@@ -344,7 +434,7 @@
                             </div>
                         </div>
                         
-                        <div class="flex items-start">
+                        <div class="flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer">
                             <div class="bg-blue-100 p-2 rounded-full mr-3 flex-shrink-0">
                                 <ion-icon name="water-outline" class="text-blue-600"></ion-icon>
                             </div>
@@ -354,7 +444,7 @@
                             </div>
                         </div>
                         
-                        <div class="flex items-start">
+                        <div class="flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer">
                             <div class="bg-purple-100 p-2 rounded-full mr-3 flex-shrink-0">
                                 <ion-icon name="restaurant-outline" class="text-purple-600"></ion-icon>
                             </div>
@@ -501,8 +591,463 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <!-- JavaScript personalizado -->
-     <link rel="stylesheet" href="{% static 'js/userd.js' %}">
-   
 
-</body>
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gráfico de progreso
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            let progressChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                    datasets: [
+                        {
+                            label: 'Minutos de ejercicio',
+                            data: [30, 45, 35, 50, 40, 25, 60],
+                            borderColor: '#10B981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Calorías quemadas',
+                            data: [250, 380, 300, 420, 350, 200, 500],
+                            borderColor: '#3B82F6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Actualizar gráfico según filtro
+            document.getElementById('progressFilter').addEventListener('change', function() {
+                const filterValue = this.value;
+                let labels = [];
+                let exerciseData = [];
+                let caloriesData = [];
+                
+                if (filterValue === 'week') {
+                    labels = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+                    exerciseData = [30, 45, 35, 50, 40, 25, 60];
+                    caloriesData = [250, 380, 300, 420, 350, 200, 500];
+                } else if (filterValue === '2weeks') {
+                    labels = ['Sem 1 - Lun', 'Sem 1 - Vie', 'Sem 2 - Lun', 'Sem 2 - Vie'];
+                    exerciseData = [150, 200, 180, 220];
+                    caloriesData = [1200, 1600, 1400, 1800];
+                } else if (filterValue === 'month') {
+                    labels = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'];
+                    exerciseData = [180, 220, 240, 210];
+                    caloriesData = [1500, 1800, 2000, 1700];
+                }
+                
+                progressChart.data.labels = labels;
+                progressChart.data.datasets[0].data = exerciseData;
+                progressChart.data.datasets[1].data = caloriesData;
+                progressChart.update();
+            });
+
+            // Mostrar/ocultar formulario de edición
+            const editBtn = document.getElementById('editDataBtn');
+            const cancelBtn = document.getElementById('cancelEditBtn');
+            const updateForm = document.getElementById('updateForm');
+            const userDataForm = document.getElementById('userDataForm');
+
+            editBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                updateForm.classList.remove('hidden');
+                updateForm.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            cancelBtn.addEventListener('click', function() {
+                updateForm.classList.add('hidden');
+            });
+
+            // Manejar envío del formulario
+            userDataForm.addEventListener('submit', function(e) {
+                
+                 e.preventDefault();
+                
+                // Obtener valores del formulario
+                const height = document.getElementById('height').value;
+                const weight = document.getElementById('weight').value;
+                const age = document.getElementById('age').value;
+                const goal = document.getElementById('goal').value;
+                
+                // Validaciones básicas
+                if (!height || !weight || !age) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Por favor completa todos los campos!',
+                        confirmButtonColor: '#10B981'
+                    });
+                    return;
+                }
+                
+                if (height < 100 || height > 250) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Altura inválida',
+                        text: 'Por favor ingresa una altura entre 100 y 250 cm',
+                        confirmButtonColor: '#10B981'
+                    });
+                    return;
+                }
+                
+                if (weight < 30 || weight > 300) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Peso inválido',
+                        text: 'Por favor ingresa un peso entre 30 y 300 kg',
+                        confirmButtonColor: '#10B981'
+                    });
+                    return;
+                }
+                
+                if (age < 12 || age > 120) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Edad inválida',
+                        text: 'Por favor ingresa una edad entre 12 y 120 años',
+                        confirmButtonColor: '#10B981'
+                    });
+                    return;
+                }
+                
+                // Calcular nuevo IMC
+                const heightInMeters = height / 100;
+                const imc = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+                
+                // Actualizar la UI con los nuevos valores
+                document.getElementById('display-height').textContent = `${height} cm`;
+                document.getElementById('display-weight').textContent = `${weight} kg`;
+                document.getElementById('display-age').textContent = `${age} años`;
+                
+                // Actualizar objetivo
+                let goalText = '';
+                switch(goal) {
+                    case 'weight_loss':
+                        goalText = 'Pérdida de peso';
+                        break;
+                    case 'muscle_gain':
+                        goalText = 'Ganancia muscular';
+                        break;
+                    case 'endurance':
+                        goalText = 'Resistencia';
+                        break;
+                    case 'maintenance':
+                        goalText = 'Mantenimiento';
+                        break;
+                }
+                document.getElementById('display-goal').textContent = goalText;
+                
+                // Actualizar IMC
+                document.getElementById('imc-value').textContent = imc;
+                
+                // Calcular porcentaje de IMC (simplificado)
+                let imcPercentage = 60; // Valor por defecto
+                if (imc < 18.5) {
+                    imcPercentage = (imc / 18.5) * 30;
+                } else if (imc >= 18.5 && imc <= 24.9) {
+                    imcPercentage = 30 + ((imc - 18.5) / (24.9 - 18.5)) * 40;
+                } else {
+                    imcPercentage = 70 + ((Math.min(imc, 40) - 25) / 15) * 30;
+                }
+                
+                document.getElementById('imc-bar').style.width = `${imcPercentage}%`;
+                
+                // Actualizar recomendaciones basadas en nuevos datos
+                updateRecommendations(goal, imc);
+                
+                // Mostrar notificación de éxito
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Datos actualizados!',
+                    text: 'Tus datos se han guardado correctamente',
+                    confirmButtonColor: '#10B981',
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+                
+                // Ocultar formulario
+                updateForm.classList.add('hidden');
+                
+                // Aquí normalmente harías una petición AJAX para guardar en el servidor
+                // Simulamos un retraso de red
+                setTimeout(() => {
+                    // Actualizar días activos y calorías basado en nuevo objetivo
+                    if (goal === 'weight_loss') {
+                        document.getElementById('active-days').textContent = '15';
+                        document.getElementById('calories-burned').textContent = '5,200';
+                        document.getElementById('next-goal').textContent = 'Perder 1.5kg';
+                    } else if (goal === 'muscle_gain') {
+                        document.getElementById('active-days').textContent = '12';
+                        document.getElementById('calories-burned').textContent = '4,500';
+                        document.getElementById('next-goal').textContent = 'Ganar 0.5kg de músculo';
+                    }
+                }, 1000);
+            });
+            
+            // Función para actualizar recomendaciones
+            function updateRecommendations(goal, imc) {
+                const recommendationsContainer = document.getElementById('recommendations-container');
+                let recommendations = [];
+                
+                // Recomendaciones basadas en objetivo
+                if (goal === 'weight_loss') {
+                    recommendations.push({
+                        icon: 'flame-outline',
+                        color: 'red',
+                        title: 'Cardio intenso',
+                        text: 'Aumenta tu rutina de cardio para quemar más calorías'
+                    });
+                    
+                    recommendations.push({
+                        icon: 'nutrition-outline',
+                        color: 'green',
+                        title: 'Déficit calórico',
+                        text: 'Mantén un déficit de 300-500 calorías diarias'
+                    });
+                } else if (goal === 'muscle_gain') {
+                    recommendations.push({
+                        icon: 'barbell-outline',
+                        color: 'blue',
+                        title: 'Entrenamiento de fuerza',
+                        text: 'Enfócate en ejercicios compuestos con peso progresivo'
+                    });
+                    
+                    recommendations.push({
+                        icon: 'egg-outline',
+                        color: 'yellow',
+                        title: 'Proteína suficiente',
+                        text: 'Consume al menos 1.6g de proteína por kg de peso'
+                    });
+                }
+                
+                // Recomendaciones basadas en IMC
+                if (imc < 18.5) {
+                    recommendations.push({
+                        icon: 'add-outline',
+                        color: 'purple',
+                        title: 'Aumento de peso saludable',
+                        text: 'Enfócate en ganar masa muscular en lugar de grasa'
+                    });
+                } else if (imc > 25) {
+                    recommendations.push({
+                        icon: 'remove-outline',
+                        color: 'green',
+                        title: 'Reducción de peso',
+                        text: 'Combina ejercicio cardiovascular con dieta balanceada'
+                    });
+                }
+                
+                // Recomendación general
+                recommendations.push({
+                    icon: 'water-outline',
+                    color: 'blue',
+                    title: 'Hidratación',
+                    text: 'Bebe al menos 2 litros de agua al día'
+                });
+                
+                // Limpiar recomendaciones existentes
+                recommendationsContainer.innerHTML = '';
+                
+                // Agregar nuevas recomendaciones
+                recommendations.forEach(rec => {
+                    const recElement = document.createElement('div');
+                    recElement.className = 'flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer';
+                    recElement.innerHTML = `
+                        <div class="bg-${rec.color}-100 p-2 rounded-full mr-3 flex-shrink-0">
+                            <ion-icon name="${rec.icon}" class="text-${rec.color}-600"></ion-icon>
+                        </div>
+                        <div>
+                            <p class="font-medium">${rec.title}</p>
+                            <p class="text-sm text-gray-600">${rec.text}</p>
+                        </div>
+                    `;
+                    recommendationsContainer.appendChild(recElement);
+                });
+            }
+            
+            // Botón para refrescar recomendaciones
+            document.getElementById('refresh-recommendations').addEventListener('click', function() {
+                const goal = document.getElementById('goal').value;
+                const imc = parseFloat(document.getElementById('imc-value').textContent);
+                updateRecommendations(goal, imc);
+                
+                // Efecto de rotación
+                this.classList.add('animate-spin');
+                setTimeout(() => {
+                    this.classList.remove('animate-spin');
+                }, 500);
+                
+                // Notificación
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Recomendaciones actualizadas',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            });
+            
+            // Notificación de bienvenida
+            setTimeout(() => {
+                const welcomeToast = document.createElement('div');
+                welcomeToast.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center animate-fade-in-up z-50';
+                welcomeToast.innerHTML = `
+                    <ion-icon name="checkmark-circle" class="text-xl mr-2"></ion-icon>
+                    <span>¡Bienvenido de vuelta! Tu progreso va muy bien.</span>
+                    <button class="ml-4 text-white hover:text-gray-200" onclick="this.parentElement.remove()">
+                        <ion-icon name="close"></ion-icon>
+                    </button>
+                `;
+                document.body.appendChild(welcomeToast);
+                
+                setTimeout(() => {
+                    welcomeToast.classList.remove('animate-fade-in-up');
+                    welcomeToast.classList.add('animate-fade-out-down');
+                    setTimeout(() => welcomeToast.remove(), 500);
+                }, 5000);
+            }, 1500);
+            
+            // Inicializar recomendaciones
+            const initialGoal = document.getElementById('goal').value;
+            const initialImc = parseFloat(document.getElementById('imc-value').textContent);
+            updateRecommendations(initialGoal, initialImc);
+        });
+        
+        // Animaciones CSS adicionales
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes fadeOutDown {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+            }
+            
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            
+            .animate-fade-in-up {
+                animation: fadeInUp 0.5s ease-out forwards;
+            }
+            
+            .animate-fade-out-down {
+                animation: fadeOutDown 0.5s ease-out forwards;
+            }
+            
+            .animate-spin {
+                animation: spin 0.5s linear;
+            }
+            
+            /* Efecto hover para tarjetas */
+            .hover-scale:hover {
+                transform: scale(1.02);
+            }
+            
+            .transition-all {
+                transition-property: all;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                transition-duration: 200ms;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+        <!-- JS de Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+<!-- Script para el menú móvil -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                
+                // Cambiar el icono según el estado del menú
+                const icon = mobileMenuButton.querySelector('ion-icon');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.setAttribute('name', 'menu-outline');
+                } else {
+                    icon.setAttribute('name', 'close-outline');
+                }
+            });
+            
+            // Animación de notificación al cargar
+            setTimeout(() => {
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center animate-fade-in-up z-50';
+                notification.innerHTML = `
+                    <ion-icon name="fitness-outline" class="text-xl mr-2"></ion-icon>
+                    <span>¡Bienvenido a VitaFIT!</span>
+                    <button class="ml-4 text-white hover:text-gray-200" onclick="this.parentElement.remove()">
+                        <ion-icon name="close"></ion-icon>
+                    </button>
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.remove('animate-fade-in-up');
+                    notification.classList.add('animate-fade-out-down');
+                    setTimeout(() => notification.remove(), 500);
+                }, 5000);
+            }, 1000);
+        });
+    </script>
 </html>

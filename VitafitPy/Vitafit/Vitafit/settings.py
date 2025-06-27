@@ -11,6 +11,15 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import environ
+from dotenv import load_dotenv
+
+load_dotenv()
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -159,6 +168,22 @@ ACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+
+
+# Inicializar entorno
+
+
+
+
+SECRET_KEY = env("SECRET_KEY")
+DEBUG = env.bool("DEBUG", default=False)
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+
+# OpenAI
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
 
 # Add a try-except block to handle potential database connection errors
 try:

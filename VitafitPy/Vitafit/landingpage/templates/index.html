@@ -57,7 +57,7 @@
             </button>
       
             <ul class="navbar-list">
-              <li><a href="#home" class="navbar-link active" data-nav-link>Inicio</a></li>
+              <li><a href="{% url 'index'%}" class="navbar-link active" data-nav-link>Inicio</a></li>
               <li><a href="#about" class="navbar-link" data-nav-link>Sobre nosotros</a></li>
               <li><a href="{% url 'rutines' %}" class="navbar-link" data-nav-link>Rutinas</a></li>
               <li><a href="#blog" class="navbar-link" data-nav-link>Plan nutricional</a></li>
@@ -74,7 +74,7 @@
       </a>
     {% else %}
       <!-- Ícono perfil de usuario -->
-      <a href="{% url 'adminpage' %}" class="text-blue-600 hover:text-green-800 text-5xl" title="Mi perfil">
+      <a href="{% url 'userd' %}" class="text-blue-600 hover:text-green-800 text-5xl" title="Mi perfil">
         <ion-icon name="person-circle-outline"></ion-icon>
       </a>
     {% endif %}

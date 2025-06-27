@@ -1,48 +1,102 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Widget Chat Salud y Fitness</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'css/recomendaciones.css' %}">
-</head>
-<body class="relative min-h-screen bg-green-50">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Widget Chat Salud y Fitness</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/recomendaciones.css' %}" />
+    <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+  </head>
+  <body class="relative min-h-screen bg-green-50">
+    {% csrf_token %}
 
+    <!-- Botón flotante -->
+    <button
+      id="toggleChat"
+      class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-green-700 transition-all z-50"
+    >
+      💬 Chat
+    </button>
 
-  <!-- Botón flotante -->
-  <button id="toggleChat" class="fixed bottom-4 right-4 bg-red-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-red-700 transition-all z-50">
-    💬 Chat
-  </button>
+    <!-- Chat tipo ventana desplegable estilo ChatGPT -->
+    <div
+      id="chatWidget"
+      class="fixed inset-0 z-50 hidden bg-black bg-opacity-50"
+    >
+      <div
+        class="absolute right-0 top-0 w-full sm:w-[90%] md:w-[80%] lg:w-[70%] h-full bg-white rounded-l-3xl shadow-lg flex transition-all ease-in-out duration-500 overflow-hidden"
+      >
+        <!-- Barra lateral -->
+        <div
+          id="sidebar"
+          class="w-64 bg-green-600 text-white p-4 flex flex-col gap-4"
+        >
+          <h2 class="text-xl font-bold mb-4">Menú</h2>
+          <button class="text-left hover:bg-green-500 px-3 py-2 rounded">
+            🏋️ Rutinas
+          </button>
+          <button class="text-left hover:bg-green-500 px-3 py-2 rounded">
+            🍎 Alimentación
+          </button>
+          <button class="text-left hover:bg-green-500 px-3 py-2 rounded">
+            📊 Perfil
+          </button>
+        </div>
 
-  <!-- Chat Widget -->
-  <div id="chatWidget" class="fixed bottom-20 right-4 w-[400px] h-[500px] bg-[#71c664] text-white rounded-2xl shadow-xl hidden flex flex-col overflow-hidden z-50">
+        <!-- Área del Chat -->
+        <div class="flex-1 flex flex-col">
+          <!-- Encabezado -->
+          <div
+            class="bg-gray-100 border-b px-4 py-3 flex justify-between items-center"
+          >
+            <h3 class="font-bold text-lg text-gray-800">Asistente Saludable</h3>
+            <button
+              id="closeChat"
+              class="text-red-500 text-2xl font-bold hover:text-red-700"
+            >
+              &times;
+            </button>
+          </div>
 
-    <!-- Encabezado del chat -->
-    <div class="flex justify-between items-center px-4 py-3 border-b border-white/20 bg-[#60b955]">
-      <h3 class="text-lg font-bold text-black">Asistente Fitness</h3>
-      <div class="space-x-2">
-        <button id="minimizeChat" class="text-red-500 font-bold hover:text-red-600">_</button>
-        <button id="closeChat" class="text-red-500 font-bold hover:text-red-600">×</button>
+          <!-- Cuerpo del chat -->
+          <div
+            id="chatbox"
+            class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50"
+          ></div>
+
+          <!-- Input -->
+          <div class="border-t p-4 bg-white">
+            <div class="flex gap-2">
+              <input
+                type="text"
+                id="userInput"
+                class="flex-1 border px-4 py-2 rounded-lg focus:outline-none"
+                placeholder="Escribe tu mensaje..."
+              />
+              <button
+                id="sendBtn"
+                class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+              >
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Área de mensajes -->
-    <div id="chatbox" class="p-4 space-y-2 overflow-y-auto h-64">
-      <!-- Mensajes aparecerán aquí -->
-    </div>
-
-    <!-- Input -->
-    <div class="p-3 border-t border-white/20 bg-[#60b955]">
-      <div class="flex gap-2">
-        <input type="text" id="userInput" placeholder="Escribe tu mensaje..." class="flex-1 px-3 py-2 rounded-xl text-black bg-white placeholder-gray-400 focus:outline-none">
-        <button onclick="enviarMensaje()" class="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700">Enviar</button>
-      </div>
-    </div>
-  </div>
-
-
-  <script src="{% static 'js/recomendaciones.js' %}"></script>
-</body>
+    <script>
+      document.cookie.split(";").forEach((cookie) => {
+        if (cookie.trim().startsWith("csrftoken")) {
+          console.log("CSRF Cookie OK:", cookie);
+        }
+      });
+    </script>
+    <script src="{% static 'js/recomendaciones.js' %}"></script>
+  </body>
 </html>

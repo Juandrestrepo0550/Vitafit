@@ -1,6 +1,14 @@
 {
-  "dependencies": {
-    "@tailwindcss/cli": "^4.1.7",
-    "tailwindcss": "^4.1.7"
+  "name": "vitafit-tailwind",
+  "version": "1.0.0",
+  "description": "Configuración de Tailwind para el proyecto Django Vitafit",
+  "scripts": {
+    "build": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --minify",
+    "watch": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^4.1.10"
   }
 }
