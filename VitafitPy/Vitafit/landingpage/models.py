@@ -36,9 +36,19 @@ class Usuarios(models.Model):
     apellidos = models.CharField(max_length=128)
     correo = models.CharField(max_length=200)
     nickname = models.CharField(max_length=20)  # Faltaba
-    Edad = models.DateField()                   # Faltaba
+    Edad = models.IntegerField()                   # Faltaba
     peso = models.DecimalField(max_digits=5, decimal_places=2)   # Faltaba
     altura = models.DecimalField(max_digits=5, decimal_places=2) # Faltaba
+    objetivo = models.CharField(
+        max_length=20,
+        choices=[
+            ('weight_loss', 'Pérdida de peso'),
+            ('muscle_gain', 'Ganancia muscular'),
+            ('endurance', 'Resistencia'),
+            ('maintenance', 'Mantenimiento'),
+        ],
+        default='maintenance'
+    )
     contrasena = models.CharField(max_length=128)
     rol = models.CharField(
         max_length=13,
@@ -66,5 +76,18 @@ class Usuarios(models.Model):
     )
 
     class Meta:
-        managed = False  # porque ya tienes la tabla creada en MySQL
+        managed = True  # porque ya tienes la tabla creada en MySQL
         db_table = 'usuarios'
+        
+    
+ 
+class HistorialPersonalUsuario(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
+    peso_anterior = models.DecimalField(max_digits=5, decimal_places=2)
+    altura_anterior = models.DecimalField(max_digits=5, decimal_places=2)
+    fecha_cambio = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        managed = False
+        db_table = 'historial_personal_usuario'
