@@ -29,6 +29,8 @@ from django.db import models
 
 
 from django.db import models
+from django.db.models import F, Count
+from django.utils import timezone
 
 class Usuarios(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -91,3 +93,45 @@ class HistorialPersonalUsuario(models.Model):
     class Meta:
         managed = False
         db_table = 'historial_personal_usuario'
+
+
+class Ejercicio(models.Model):
+    nombre = models.CharField(max_length=200)
+    descripcion = models.TextField()
+    aporte_muscular = models.CharField(max_length=255)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    ultima_actualizacion = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.nombre
+
+class Rutina(models.Model):
+    nombre = models.CharField(max_length=200)
+    descripcion = models.TextField()
+    ejercicios = models.ManyToManyField(
+        Ejercicio,
+        through='RutinaEjercicio',
+        related_name='rutinas',
+    )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    ultima_actualizacion = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.nombre
+
+    @property
+    def cantidad_ejercicios(self):
+        return self.rutinaejercicio_set.count()
+
+class RutinaEjercicio(models.Model):
+    rutina = models.ForeignKey(Rutina, on_delete=models.CASCADE)
+    ejercicio = models.ForeignKey(Ejercicio, on_delete=models.CASCADE)
+    cantidad_ejercicios = models.PositiveSmallIntegerField(default=1)  # si es repeticiones o similar
+    orden = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['orden']
+        unique_together = ('rutina', 'ejercicio')
+
+    def __str__(self):
+        return f"{self.rutina.nombre} - {self.ejercicio.nombre} (x{self.cantidad_ejercicios})"

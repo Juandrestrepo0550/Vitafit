@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.utils import timezone
@@ -7,6 +7,8 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from .models import Ejercicio, Rutina, RutinaEjercicio
+from .forms import EjercicioForm, RutinaForm
 from .models import Usuarios
 from .models import Usuarios, HistorialPersonalUsuario
 import json
@@ -244,3 +246,43 @@ def chat_api(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Método no permitido"}, status=405)
+
+#crear ejercicios
+def crear_ejercicio_ajax(request):
+    if request.method == 'POST':
+        form = EjercicioForm(request.POST)
+        if form.is_valid():
+            ejercicio = form.save()
+            return JsonResponse({
+                'success': True,
+                'ejercicio': {
+                    'id': ejercicio.id,
+                    'nombre': ejercicio.nombre,
+                }
+            })
+        return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+    return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
+
+#crear rutinas
+def crear_rutina(request):
+    if request.method == 'POST':
+        form = RutinaForm(request.POST)
+        ejercicios_ids = request.POST.getlist('ejercicios')  # checkbox con name="ejercicios"
+        if form.is_valid():
+            rutina = form.save()
+            for idx, eid in enumerate(ejercicios_ids):
+                ejercicio = get_object_or_404(Ejercicio, pk=eid)
+                RutinaEjercicio.objects.create(
+                    rutina=rutina,
+                    ejercicio=ejercicio,
+                    orden=idx,
+                    cantidad_ejercicios=1  # o extraes otro input si lo defines
+                )
+            return redirect('detalle_rutina', pk=rutina.pk)
+    else:
+        form = RutinaForm()
+    ejercicios = Ejercicio.objects.all()
+    return render(request, 'crear_rutina.html', {
+        'form': form,
+        'ejercicios': ejercicios,
+    })

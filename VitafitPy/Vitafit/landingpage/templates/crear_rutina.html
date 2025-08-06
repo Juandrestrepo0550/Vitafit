@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  {% load static %}
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crear Rutina</title>
@@ -26,7 +27,7 @@
     <!-- Formulario -->
     <form>
 
-      <!-- Idioma (puede representar idioma de instrucción o mantenerlo como decorativo) -->
+     
       <div class="mb-4">
         <label class="block font-medium mb-1">Idioma</label>
         <p class="flex items-center space-x-2">
@@ -42,6 +43,10 @@
                class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
         <p class="text-sm mt-1">Elige un nombre descriptivo para tu rutina de ejercicios.</p>
       </div>
+
+      <a href="#" class="transition transform hover:-translate-y-1 hover:shadow-lg bg-green-500 border-2 border-white text-white hover:bg-white hover:text-green-600 font-semibold py-3 px-6 rounded-full text-lg shadow-md">
+        💪 Crear ejercicio
+      </a>
 
       <!-- Cantidad de ejercicios -->
       <div class="mb-6">

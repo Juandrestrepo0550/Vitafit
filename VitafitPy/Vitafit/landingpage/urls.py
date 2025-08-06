@@ -15,6 +15,6 @@ urlpatterns = [
     path('rutines/', views.rutines, name='rutines'),
     path('recomendaciones/', views.recomendaciones_vi, name='recomendaciones'),
     path('api/chat/', views.chat_api, name="chat_api"),
-    path('userd/', views.userd, name='userd' )
-    
+    path('userd/', views.userd, name='userd' ),
+    path('crear/', views.crear_rutina, name= 'crear_rutina')
 ]
