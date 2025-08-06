@@ -16,4 +16,5 @@ urlpatterns = [
     path('recomendaciones/', views.recomendaciones_vi, name='recomendaciones'),
     path('api/chat/', views.chat_api, name="chat_api"),
     path('userd/', views.userd, name='userd' )
+    
 ]
