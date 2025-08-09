@@ -42,6 +42,10 @@
             }).then(() => {
                 window.location.href = "{% url 'login' %}";
             });
+
+            
+
+            
         </script>
     {% endif %}
     <!-- HEADER -->
@@ -301,23 +305,23 @@
                         </div>
                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
                             <span class="font-medium text-gray-700">Altura:</span>
-                            <span class="text-gray-900" id="display-height">{{ usuario.altura }} cm</span>
+                            <span class="text-gray-900" id="display-height">{{ datos_usuario.altura }} cm</span>
                         </div>
                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
                             <span class="font-medium text-gray-700">Peso:</span>
-                            <span class="text-gray-900" id="display-weight">{{ usuario.peso }} kg</span>
+                            <span class="text-gray-900" id="display-weight">{{ datos_usuario.peso }} kg</span>
                         </div>
                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
                             <span class="font-medium text-gray-700">Edad:</span>
-                            <span class="text-gray-900" id="display-age">{{ usuario.Edad }} años</span>
+                            <span class="text-gray-900" id="display-age">{% if edad_anios %}{{ edad_anios }} años{% else %}—{% endif %}</span>
                         </div>
                         <div class="flex justify-between items-center py-2">
                             <span class="font-medium text-gray-700">Objetivo:</span>
                             <span class="text-gray-900" id="display-goal">
-                                {% if usuario.objetivo == "weight_loss" %}Pérdida de peso{% endif %}
-                                {% if usuario.objetivo == "muscle_gain" %}Ganancia muscular{% endif %}
-                                {% if usuario.objetivo == "endurance" %}Resistencia{% endif %}
-                                {% if usuario.objetivo == "maintenance" %}Mantenimiento{% endif %}
+                                {% if datos_usuario.objetivo == "weight_loss" %}Pérdida de peso{% endif %}
+                                {% if datos_usuario.objetivo == "muscle_gain" %}Ganancia muscular{% endif %}
+                                {% if datos_usuario.objetivo == "endurance" %}Resistencia{% endif %}
+                                {% if datos_usuario.objetivo == "maintenance" %}Mantenimiento{% endif %}
                             </span>
                         </div>
                     </div>
@@ -335,26 +339,26 @@
                     <form id="userDataForm" class="space-y-4">
                         <div>
                             <label for="height" class="block text-sm font-medium text-gray-700 mb-1">Altura (cm)</label>
-                            <input type="number" id="height" name="height" value="{{ usuario.altura }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                            <input type="number" id="height" name="height" value="{{ datos_usuario.altura }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
                         </div>
                         
                         <div>
                             <label for="weight" class="block text-sm font-medium text-gray-700 mb-1">Peso (kg)</label>
-                            <input type="number" id="weight" name="weight" value="{{ usuario.peso }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                            <input type="number" id="weight" name="weight" value="{{ datos_usuario.peso }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
                         </div>
                         
                         <div>
-                            <label for="age" class="block text-sm font-medium text-gray-700 mb-1">Edad</label>
-                            <input type="number" id="age" name="age" value="{{ usuario.Edad }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                            <label for="edad" class="block text-sm font-medium text-gray-700 mb-1">Fecha de nacimiento</label>
+                            <input type="date" id="edad" name="edad" value="{{ datos_usuario.edad|date:'Y-m-d' }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
                         </div>
                         
                         <div>
                             <label for="goal" class="block text-sm font-medium text-gray-700 mb-1">Objetivo</label>
                             <select id="goal" name="goal" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                                <option value="weight_loss" {% if usuario.objetivo == "weight_loss" %}selected{% endif %}>Pérdida de peso</option>
-                                <option value="muscle_gain" {% if usuario.objetivo == "muscle_gain" %}selected{% endif %}>Ganancia muscular</option>
-                                <option value="endurance" {% if usuario.objetivo == "endurance" %}selected{% endif %}>Resistencia</option>
-                                <option value="maintenance" {% if usuario.objetivo == "maintenance" %}selected{% endif %}>Mantenimiento</option>
+                                <option value="weight_loss" {% if datos_usuario.objetivo == "weight_loss" %}selected{% endif %}>Pérdida de peso</option>
+                                <option value="muscle_gain" {% if datos_usuario.objetivo == "muscle_gain" %}selected{% endif %}>Ganancia muscular</option>
+                                <option value="endurance" {% if datos_usuario.objetivo == "endurance" %}selected{% endif %}>Resistencia</option>
+                                <option value="maintenance" {% if datos_usuario.objetivo == "maintenance" %}selected{% endif %}>Mantenimiento</option>
                             </select>
                         </div>
                         
@@ -593,6 +597,82 @@
     <!-- JavaScript personalizado -->
 
      <script>
+
+        // helper CSRF (obtiene cookie csrf)
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let c of cookies) {
+            c = c.trim();
+            if (c.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(c.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+document.getElementById('userDataForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const altura = document.getElementById('height').value;
+    const peso = document.getElementById('weight').value;
+    const edad = document.getElementById('edad').value; // YYYY-MM-DD
+    const objetivo = document.getElementById('goal').value;
+
+    try {
+        const res = await fetch("{% url 'userd' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({ altura, peso, edad, objetivo })
+        });
+
+
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+
+            const du = data.datos_usuario;
+
+            document.getElementById('display-height').textContent = data.altura + ' cm';
+            document.getElementById('display-weight').textContent = data.peso + ' kg';
+            document.getElementById('display-age').textContent = data.edad_anios + ' años';
+            // map objetivo to human text
+            const mapGoal = {
+                'weight_loss': 'Pérdida de peso',
+                'muscle_gain': 'Ganancia muscular',
+                'endurance': 'Resistencia',
+                'maintenance': 'Mantenimiento'
+            };
+
+            document.getElementById('display-goal').textContent = mapGoal[du.objetivo] || du.objetivo;
+
+            if (data.imc !== null) {
+                document.getElementById('imc-value').textContent = data.imc;}
+
+            Swal.fire({ 
+                icon: 'success',
+                title: 'Datos actualizados',
+                timer: 1400,
+                showConfirmButton: false });
+
+            // ocultar form
+
+            document.getElementById('updateForm').classList.add('hidden');
+            
+        } else {
+            Swal.fire({ icon: 'error', title: 'Error', text: data.error || 'No se pudo actualizar' });
+        }
+    } catch (err) {
+        Swal.fire({ icon: 'error', title: 'Error de red', text: err.message });
+    }
+});
 
         
 

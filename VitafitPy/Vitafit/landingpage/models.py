@@ -32,25 +32,13 @@ from django.db import models
 from django.db.models import F, Count
 from django.utils import timezone
 
+
 class Usuarios(models.Model):
     id = models.BigAutoField(primary_key=True)
     nombres = models.CharField(max_length=128)
     apellidos = models.CharField(max_length=128)
     correo = models.CharField(max_length=200)
-    nickname = models.CharField(max_length=20)  # Faltaba
-    Edad = models.IntegerField()                   # Faltaba
-    peso = models.DecimalField(max_digits=5, decimal_places=2)   # Faltaba
-    altura = models.DecimalField(max_digits=5, decimal_places=2) # Faltaba
-    objetivo = models.CharField(
-        max_length=20,
-        choices=[
-            ('weight_loss', 'Pérdida de peso'),
-            ('muscle_gain', 'Ganancia muscular'),
-            ('endurance', 'Resistencia'),
-            ('maintenance', 'Mantenimiento'),
-        ],
-        default='maintenance'
-    )
+    Edad = models.DateField(null=True, blank=True)                 # Faltaba
     contrasena = models.CharField(max_length=128)
     rol = models.CharField(
         max_length=13,
@@ -65,7 +53,7 @@ class Usuarios(models.Model):
     #foto_perfil = models.CharField(max_length=255, blank=True, null=True)
     fecha_registro = models.DateTimeField(blank=True, null=True)
     fecha_modificacion = models.DateTimeField(blank=True, null=True)
-    recuperarcontraseña = models.CharField(max_length=128, blank=True, null=True)
+    recuperarcontrasena = models.CharField(max_length=128, blank=True, null=True)
     token = models.CharField(max_length=128, blank=True, null=True)
     token_expiracion = models.DateTimeField(blank=True, null=True)
     estado = models.CharField(
@@ -81,8 +69,6 @@ class Usuarios(models.Model):
         managed = True  # porque ya tienes la tabla creada en MySQL
         db_table = 'usuarios'
         
-    
- 
 class HistorialPersonalUsuario(models.Model):
     id = models.BigAutoField(primary_key=True)
     usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
@@ -93,6 +79,57 @@ class HistorialPersonalUsuario(models.Model):
     class Meta:
         managed = False
         db_table = 'historial_personal_usuario'
+        
+from datetime import date
+from django.db import models
+
+class DatosUsuario(models.Model):
+    id = models.AutoField(primary_key=True) 
+    # usaremos OneToOne para que cada usuario tenga a lo sumo 1 fila en datos_usuario:
+    id_usuario = models.OneToOneField(
+        'Usuarios',
+        on_delete=models.CASCADE,
+        db_column='usuario_id',
+        related_name='datos'
+    )
+    # guardamos fecha de nacimiento como DATE en la columna 'edad' (coincide con tu SQL actual)
+    edad = models.DateField(null=True, blank=True, default=date(2000,1,1))   # <-- aquí guardas 2006-07-16
+    peso = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, default=0.00)
+    altura = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, default=0.00)
+
+    objetivo = models.CharField(
+        max_length=20,
+        choices=[
+            ('weight_loss', 'Pérdida de peso'),
+            ('muscle_gain', 'Ganancia muscular'),
+            ('endurance', 'Resistencia'),
+            ('maintenance', 'Mantenimiento'),
+        ],
+        null=True,
+        blank=True,
+        default='maintenance'
+    )
+
+    class Meta:
+        db_table = 'datos_usuario'
+        managed = True   # recomendado para usar migraciones; ver nota abajo
+
+    def __str__(self):
+        return f"DatosUsuario({self.id_usuario.nombres})"
+
+    @property
+    def edad_anios(self) -> int | None:
+        """
+        Devuelve la edad en años (entero), calculada a partir de self.edad (DATE).
+        Retorna None si no hay fecha de nacimiento.
+        """
+        if not self.edad:
+            return None
+        today = date.today()
+        years = today.year - self.edad.year - (
+            (today.month, today.day) < (self.edad.month, self.edad.day)
+        )
+        return years        
 
 
 class Ejercicio(models.Model):

@@ -10,10 +10,14 @@ from django.conf import settings
 from .models import Ejercicio, Rutina, RutinaEjercicio
 from .forms import EjercicioForm, RutinaForm
 from .models import Usuarios
+from .models import DatosUsuario
 from .models import Usuarios, HistorialPersonalUsuario
 import json
 import openai
-from datetime import datetime
+from datetime import datetime, date
+from django.http import JsonResponse
+
+
 
 # Páginas básicas
 def index(request):
@@ -33,11 +37,11 @@ def register(request):
 
         if not nombres or not apellidos or not correo or not contrasena or not repetircontrasena:
             messages.error(request, "Por favor completa todos los campos.")
-            return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'register'})
+            return render(request, "socialaccount/login.html", {'form_type': 'register'})
 
         if contrasena != repetircontrasena:
             messages.error(request, "Las contraseñas no coinciden.")
-            return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'register'})
+            return render(request, "socialaccount/login.html", {'form_type': 'register'})
 
         usuario = Usuarios(
             nombres=nombres,
@@ -54,7 +58,7 @@ def register(request):
         messages.success(request, "Usuario registrado correctamente.")
         return redirect(f"{reverse('login')}?registro=ok")
 
-    return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'register'})
+    return render(request, 'socialaccount/login.html', {'form_type': 'register'})
 
 # Validar correo (AJAX)
 def val_correo(request):
@@ -70,13 +74,13 @@ def inicio_sesion(request):
 
         if not correo or not contrasena:
             messages.error(request, "Por favor ingresa correo y contraseña.")
-            return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'login'})
+            return render(request, 'socialaccount/login.html', {'form_type': 'login'})
 
         usuarios = Usuarios.objects.filter(correo=correo)
 
         if not usuarios.exists():
             messages.error(request, "El correo no está registrado.")
-            return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'login'})
+            return render(request, 'socialaccount/login.html', {'form_type': 'login'})
 
         usuario = usuarios.first()
 
@@ -89,9 +93,9 @@ def inicio_sesion(request):
             return redirect('index')
         else:
             messages.error(request, "Contraseña incorrecta.")
-            return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'login'})
+            return render(request, 'socialaccount/login.html', {'form_type': 'login'})
 
-    return render(request, 'Vitafit/landingpage/login.html', {'form_type': 'login'})
+    return render(request, 'socialaccount/login.html', {'form_type': 'login'})
 
 # Cerrar sesión
 def cerrar_sesion(request):
@@ -110,101 +114,148 @@ def rutines(request):
 
 @login_required(login_url='login')
 def userd(request):
-    # Obtener el usuario autenticado
+    # Obtener usuario autenticado
     usuario = None
     if 'usuario_id' in request.session:
         try:
             usuario = Usuarios.objects.get(id=request.session['usuario_id'])
         except Usuarios.DoesNotExist:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'error': 'Usuario no encontrado en la tabla usuarios.'}, status=404)
             messages.error(request, "Usuario no encontrado en la tabla usuarios.")
             return redirect('login')
     else:
-        # Si el usuario está autenticado vía auth_user (e.g., Google login)
         try:
             usuario = Usuarios.objects.get(correo=request.user.email)
             request.session['usuario_id'] = usuario.id
             request.session['usuario_nombre'] = usuario.nombres
             request.session['rol'] = usuario.rol
         except Usuarios.DoesNotExist:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'error': 'No tienes un perfil en VitaFIT. Por favor, registra un perfil.'}, status=404)
             messages.error(request, "No tienes un perfil en VitaFIT. Por favor, registra un perfil.")
             return redirect('register')
 
+    # Obtener o crear datos del usuario
+    datos_usuario, _ = DatosUsuario.objects.get_or_create(id_usuario=usuario)
+
     if request.method == 'POST':
         try:
+            # Detectar si es AJAX o POST normal
             data = json.loads(request.body) if request.headers.get('X-Requested-With') == 'XMLHttpRequest' else request.POST
             altura = data.get('altura')
             peso = data.get('peso')
-            edad = data.get('edad')
+            fecha_nac = data.get('edad')  # Formato esperado YYYY-MM-DD
             objetivo = data.get('objetivo')
 
-            # Validar inputs
-            if not all([altura, peso, edad, objetivo]):
-                return JsonResponse({'error': 'Todos los campos son obligatorios.'}, status=400)
+            # Validar campos obligatorios
+            if not all([altura, peso, fecha_nac, objetivo]):
+                msg = {'error': 'Todos los campos son obligatorios.'}
+                return JsonResponse(msg, status=400) if request.headers.get('X-Requested-With') else redirect('userd')
 
+            # Validar numéricos
             try:
                 altura = float(altura)
                 peso = float(peso)
-                edad = int(edad)
                 if altura <= 0 or peso <= 0:
-                    return JsonResponse({'error': 'Altura y peso deben ser mayores a 0.'}, status=400)
-                if edad < 0 or edad > 150:
-                    return JsonResponse({'error': 'La edad debe estar entre 0 y 150 años.'}, status=400)
+                    msg = {'error': 'Altura y peso deben ser mayores a 0.'}
+                    return JsonResponse(msg, status=400) if request.headers.get('X-Requested-With') else redirect('userd')
             except ValueError:
-                return JsonResponse({'error': 'Altura, peso y edad deben ser números válidos.'}, status=400)
+                msg = {'error': 'Altura y peso deben ser números válidos.'}
+                return JsonResponse(msg, status=400) if request.headers.get('X-Requested-With') else redirect('userd')
 
-            valid_objetivos = [choice[0] for choice in Usuarios.objetivo.field.choices]
+            # Validar fecha
+            try:
+                fecha_nac_date = datetime.strptime(fecha_nac, '%Y-%m-%d').date()
+            except ValueError:
+                msg = {'error': 'Fecha de nacimiento inválida. Formato YYYY-MM-DD.'}
+                return JsonResponse(msg, status=400) if request.headers.get('X-Requested-With') else redirect('userd')
+
+            # Calcular edad en años
+            hoy = date.today()
+            edad_anios = hoy.year - fecha_nac_date.year - (
+                (hoy.month, hoy.day) < (fecha_nac_date.month, fecha_nac_date.day)
+            )
+            if edad_anios < 0 or edad_anios > 150:
+                msg = {'error': 'Edad fuera de rango.'}
+                return JsonResponse(msg, status=400) if request.headers.get('X-Requested-With') else redirect('userd')
+
+            # Validar objetivo
+            valid_objetivos = [c[0] for c in DatosUsuario._meta.get_field('objetivo').choices]
             if objetivo not in valid_objetivos:
-                return JsonResponse({'error': 'Objetivo inválido.'}, status=400)
+                msg = {'error': 'Objetivo inválido.'}
+                return JsonResponse(msg, status=400) if request.headers.get('X-Requested-With') else redirect('userd')
 
-            # Guardar historial de peso y altura
-            if usuario.peso != peso or usuario.altura != altura: HistorialPersonalUsuario.objects.create(
-                    usuario=usuario,
-                    peso_anterior=usuario.peso,
-                    altura_anterior=usuario.altura
-                )
+            # Guardar historial si cambió peso o altura
+            if datos_usuario.peso and datos_usuario.altura:
+                if datos_usuario.peso != peso or datos_usuario.altura != altura:
+                    HistorialPersonalUsuario.objects.create(
+                        usuario=usuario,
+                        peso_anterior=datos_usuario.peso or 0,
+                        altura_anterior=datos_usuario.altura or 0
+                    )
 
             # Actualizar datos
-            usuario.altura = altura
-            usuario.peso = peso
-            usuario.Edad = edad
-            usuario.objetivo = objetivo
-            usuario.fecha_modificacion = timezone.now()
-            usuario.save()
+            datos_usuario.altura = altura
+            datos_usuario.peso = peso
+            datos_usuario.edad = fecha_nac_date
+            datos_usuario.objetivo = objetivo
+            datos_usuario.fecha_modificacion = timezone.now()
+            datos_usuario.save()
 
             # Calcular IMC
-            imc = round(peso / ((altura / 100) ** 2), 2)
+            imc = None
+            if datos_usuario.altura and datos_usuario.peso:
+                try:
+                    imc = round(float(datos_usuario.peso) / ((float(datos_usuario.altura) / 100) ** 2), 2)
+                except Exception:
+                    imc = None
 
+            # Respuesta AJAX
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({
-                    'success': 'Datos actualizados correctamente.',
-                    'usuario': {
-                        'nombre': f"{usuario.nombres} {usuario.apellidos}",
-                        'altura': usuario.altura,
-                        'peso': usuario.peso,
-                        'edad': usuario.Edad,
-                        'objetivo': usuario.objetivo,
-                        'imc': imc
+                    'success': True,
+                    'imc': imc,
+                    'edad_anios': edad_anios,
+                    'altura': datos_usuario.altura,
+                    'peso': datos_usuario.peso,
+                    'objetivo': datos_usuario.objetivo,
+                    'datos_usuario': {
+                        'altura': datos_usuario.altura,
+                        'peso': datos_usuario.peso,
+                        'edad': edad_anios,
+                        'objetivo': datos_usuario.objetivo
                     }
                 })
-            else:
-                messages.success(request, 'Datos actualizados correctamente.')
-                return redirect('userd')
+
+            messages.success(request, 'Datos actualizados correctamente.')
+            return redirect('userd')
 
         except Exception as e:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({'error': str(e)}, status=500)
-            else:
-                messages.error(request, f'Error al actualizar: {str(e)}')
-                return redirect('userd')
+            messages.error(request, f'Error al actualizar: {str(e)}')
+            return redirect('userd')
 
-    # Calcular IMC para el contexto
-    imc = round(usuario.peso / ((usuario.altura / 100) ** 2), 2) if usuario.altura and usuario.peso else None
+    # Calcular IMC inicial
+    imc = round(datos_usuario.peso / ((datos_usuario.altura / 100) ** 2), 2) if datos_usuario.altura and datos_usuario.peso else None
 
-    context = {
+    # Calcular edad para mostrar
+    edad_anios = None
+    if datos_usuario.edad:
+        hoy = date.today()
+        edad_anios = hoy.year - datos_usuario.edad.year - (
+            (hoy.month, hoy.day) < (datos_usuario.edad.month, datos_usuario.edad.day)
+        )
+
+    return render(request, 'user.html', {
         'usuario': usuario,
-        'imc': imc
-    }
-    return render(request, 'user.html', context)
+        'datos_usuario': datos_usuario,
+        'imc': imc,
+        'edad_anios': edad_anios
+    })
+
+
 
 def adminpage(request):
     return render(request, 'dashboard.html')
